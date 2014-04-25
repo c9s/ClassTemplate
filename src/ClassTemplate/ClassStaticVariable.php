@@ -1,7 +1,7 @@
 <?php
 namespace ClassTemplate;
 
-class ClassStaticVariable
+class ClassStaticVariable extends Statement
 {
     public $name;
     public $value;
@@ -14,7 +14,7 @@ class ClassStaticVariable
         $this->scope = $scope;
     }
 
-    public function __toString()
+    public function render()
     {
         return $this->scope . ' static $' . $this->name . ' = ' . var_export($this->value,true) . ';';
     }

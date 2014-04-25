@@ -1,7 +1,7 @@
 <?php
 namespace ClassTemplate;
 
-class ClassProperty
+class ClassProperty extends Statement
 {
     public $name;
     public $scope = 'public';
@@ -15,7 +15,7 @@ class ClassProperty
     }
 
 
-    public function __toString()
+    public function render()
     {
         $code = $this->scope . ' $' . $this->name;
         if( $this->value ) {

@@ -1,7 +1,7 @@
 <?php
 namespace ClassTemplate;
 
-class UserFunction
+class UserFunction extends Statement
 {
     public $name;
     public $arguments = array();
@@ -55,12 +55,6 @@ class UserFunction
     public function render() {
         return 'function ' . $this->name . '(' . $this->renderArguments() . ') ' . $this->renderBody();
     }
-
-    public function __toString()
-    {
-        return $this->render();
-    }
-
 
 
 }

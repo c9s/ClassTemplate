@@ -2,7 +2,7 @@
 namespace ClassTemplate;
 use Exception;
 
-class MethodCall
+class MethodCall extends Statement
 {
     public $objectName;
 
@@ -52,10 +52,6 @@ class MethodCall
         return $code;
     }
 
-    function __toString() 
-    {
-        return $this->render();
-    }
 }
 
 

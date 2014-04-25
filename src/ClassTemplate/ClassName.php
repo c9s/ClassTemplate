@@ -1,7 +1,7 @@
 <?php
 namespace ClassTemplate;
 
-class ClassName
+class ClassName extends Statement
 {
     public $name;
     public $namespace;
@@ -32,7 +32,7 @@ class ClassName
             return '\\' . $this->name;
     }
 
-    public function __toString()
+    public function render()
     {
         return $this->getFullName();
     }
