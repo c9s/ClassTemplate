@@ -16,11 +16,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
         $classTemplate->addProperty('fields', [ 'lang', 'name' ] );
         $classTemplate->addMethod('public','getTwo',array(),'return 2;');
         $classTemplate->addMethod('public','getFoo',array('$i'),'return $i;');
-
-        $code = $classTemplate->render();
-        $tmpname = tempnam('/tmp','FOO');
-        file_put_contents($tmpname, $code);
-        require $tmpname;
+        $classTemplate->load();
     }
 
     public function testClassTemplate()

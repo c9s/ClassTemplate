@@ -16,8 +16,8 @@ class UseClass extends Statement
     {
         $code = 'use ' . $this->class;
         if( $this->as ) {
-            $code .= ' ' . $this->as . ';';
+            $code .= ' ' . $this->as;
         }
-        return $code;
+        return $code . ';';
     }
 }

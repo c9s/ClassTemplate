@@ -21,7 +21,7 @@ class TemplateView
     public $stash = array();
     public $overwrite = false;
 
-    public function __construct( $dirs , $options = array() )
+    public function __construct( $dirs , $options = array(), $stash = array() )
     {
         $this->loader = new \Twig_Loader_Filesystem( $dirs );
         $this->twig = new \Twig_Environment($this->loader, array(
@@ -30,7 +30,7 @@ class TemplateView
             'autoescape' => false,
             'debug' => true,
         ) + $options );
-
+        $this->stash = $stash;
         $this->twig->addFilter('export', new \Twig_Filter_Function('\ClassTemplate\twig_var_export'));
     }
 

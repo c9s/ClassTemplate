@@ -37,6 +37,8 @@ class ClassTemplate
      * $t = new ClassTemplate('NewClassFoo',[
      *   'template_dirs' => [ path1, path2 ],
      *   'template' => 'Class.php.twig',
+     *   'template_args' => [ ... predefined template arguments ],
+     *   'twig' => [ 'cache' => false, ... ]
      * ])
      *
      */
@@ -56,8 +58,15 @@ class ClassTemplate
         $this->templateDirs = $options['template_dirs'];
         $this->setClass($className);
 
-        $this->view = new TemplateView($this->templateDirs);
+        $this->view = new TemplateView($this->templateDirs, 
+            (isset($options['twig']) ? $options['twig'] : array()),
+            (isset($options['template_args']) ? $options['template_args'] : array())
+        );
         $this->view->class = $this;
+    }
+
+    public function setOption($key, $val) {
+        $this->options[$key] = $val;
     }
 
     public function setClass($className)
@@ -135,7 +144,17 @@ class ClassTemplate
         foreach( $args as $n => $v ) {
             $this->view->__set($n,$v);
         }
-        return $this->view->renderFile($this->templateFile);
+        $content = $this->view->renderFile($this->templateFile);
+        if ( isset($this->options['trim_tag']) && strpos($content, '<?php') === 0 ) {
+            return substr($content, 5);
+        }
+        return $content;
+    }
+
+    public function load() {
+        $tmpname = tempnam('/tmp', str_replace('\\','_',$this->class->getFullName()) );
+        file_put_contents($tmpname, $this->render() );
+        return require $tmpname;
     }
 
     public function addMsgId($msgId) {
@@ -145,6 +164,8 @@ class ClassTemplate
     public function setMsgIds($msgIds) {
         $this->msgIds = $msgIds;
     }
+
+
 
 }
 
