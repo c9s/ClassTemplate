@@ -1,13 +1,13 @@
 <?php
 namespace ClassTemplate;
 
-class ClassMember
+class ClassProperty
 {
     public $name;
     public $scope = 'public';
     public $value;
 
-    function __construct($name,$value,$scope = 'public')
+    public function __construct($name,$value,$scope = 'public')
     {
         $this->name = $name;
         $this->value = $value;

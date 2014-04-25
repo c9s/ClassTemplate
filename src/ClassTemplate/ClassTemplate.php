@@ -10,7 +10,7 @@ class ClassTemplate
     public $uses = array();
     public $methods = array();
     public $consts  = array();
-    public $members = array();
+    public $properties = array();
     public $staticVars = array();
 
     /**
@@ -82,9 +82,9 @@ class ClassTemplate
         }
     }
 
-    public function addMember($name,$value,$scope = 'public')
+    public function addProperty($name,$value,$scope = 'public')
     {
-        $this->members[] = new ClassMember($name,$value,$scope);
+        $this->properties[] = new ClassProperty($name,$value,$scope);
     }
 
     public function addStaticVar($name, $value, $scope = 'public') 
