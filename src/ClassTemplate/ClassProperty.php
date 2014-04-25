@@ -18,7 +18,7 @@ class ClassProperty extends Statement
     public function render()
     {
         $code = $this->scope . ' $' . $this->name;
-        if( $this->value ) {
+        if ( $this->value ) {
             $code .= ' = ' . var_export($this->value,true) . ';';
         }
         return $code;

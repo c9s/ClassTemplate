@@ -20,7 +20,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
         $class1->addProperty('fields', [ 'lang', 'name' ] );
 
         $class1->addMethod('public','getTwo',array(),'return 2;');
-        $class1->addMethod('public','getFoo',array('i'),'return $i;');
+        $class1->addMethod('public','getFoo',array('$i'),'return $i;');
         $code = $class1->render();
         $tmpname = tempnam('/tmp','FOO');
         file_put_contents($tmpname, $code);

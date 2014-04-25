@@ -35,11 +35,7 @@ class UserFunction extends Statement
 
     protected function renderArguments() 
     {
-        $argStrings = array();
-        foreach( $this->arguments as $name ) {
-            $argStrings[] = "\$$name";
-        }
-        return join(', ', $argStrings);
+        return join(', ', $this->arguments);
     }
 
     protected function renderBody($indent = 0) 

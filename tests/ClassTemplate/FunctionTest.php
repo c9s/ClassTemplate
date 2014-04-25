@@ -4,7 +4,7 @@ class UserFunctionTest extends PHPUnit_Framework_TestCase
 {
     public function test()
     {
-        $func = new ClassTemplate\UserFunction('user_foo', ['i', 'x = 2'], 'return $i + $x;');
+        $func = new ClassTemplate\UserFunction('user_foo', ['$i', '$x = 2'], 'return $i + $x;');
         ok($func);
         ok($func->__toString());
         eval($func->__toString());
