@@ -1,6 +1,8 @@
 <?php
 namespace ClassTemplate;
 use Exception;
+use ReflectionClass;
+use ReflectionObject;
 
 class ClassTemplate
 {
@@ -41,10 +43,12 @@ class ClassTemplate
     public function __construct($className,$options = array())
     {
         if( !isset($options['template_dirs']) ) {
-            throw new Exception('template_dirs option is required.');
+            $ro = new ReflectionObject($this);
+            $dir = dirname($ro->getFilename()) . DIRECTORY_SEPARATOR . 'Templates';
+            $options['template_dirs'] = [ $dir ];
         }
         if( !isset($options['template']) ) {
-            throw new Exception('template option is required.');
+            $options['template'] = 'Class.php.twig';
         }
 
         $this->options = $options;

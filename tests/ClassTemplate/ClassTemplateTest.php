@@ -2,33 +2,47 @@
 
 class ClassTemplateTest extends PHPUnit_Framework_TestCase
 {
-    function testUse()
+    public function testUse()
     {
         $use = new ClassTemplate\UseClass('\Foo\Bar');
         is( 'Foo\Bar', $use->class );
     }
 
-    function testClassTemplate() 
+    public function testClassTemplateWithDefaultOptions() 
     {
-        $class1 = new ClassTemplate\ClassTemplate('Foo\\Bar22',array(
+        $classTemplate = new ClassTemplate\ClassTemplate('Foo\\Bar2');
+        ok($classTemplate);
+        $classTemplate->addProperty('record','Product');
+        $classTemplate->addProperty('fields', [ 'lang', 'name' ] );
+        $classTemplate->addMethod('public','getTwo',array(),'return 2;');
+        $classTemplate->addMethod('public','getFoo',array('$i'),'return $i;');
+
+        $code = $classTemplate->render();
+        $tmpname = tempnam('/tmp','FOO');
+        file_put_contents($tmpname, $code);
+        require $tmpname;
+    }
+
+    public function testClassTemplate()
+    {
+        $classTemplate = new ClassTemplate\ClassTemplate('Foo\\Bar1',array(
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));
-        ok($class1);
+        ok($classTemplate);
+        $classTemplate->addProperty('record','Product');
+        $classTemplate->addProperty('fields', [ 'lang', 'name' ] );
+        $classTemplate->addMethod('public','getTwo',array(),'return 2;');
+        $classTemplate->addMethod('public','getFoo',array('$i'),'return $i;');
 
-        $class1->addProperty('record','Product');
-        $class1->addProperty('fields', [ 'lang', 'name' ] );
-
-        $class1->addMethod('public','getTwo',array(),'return 2;');
-        $class1->addMethod('public','getFoo',array('$i'),'return $i;');
-        $code = $class1->render();
+        $code = $classTemplate->render();
         $tmpname = tempnam('/tmp','FOO');
         file_put_contents($tmpname, $code);
         require $tmpname;
 
-        ok(class_exists('Foo\Bar22'));
+        ok(class_exists($classTemplate->class->getFullName()));
 
-        $bar22 = new Foo\Bar22;
+        $bar22 = new Foo\Bar1;
         ok($bar22);
 
         is('Product', $bar22->record);
@@ -42,5 +56,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
         is(3,$bar22->getFoo(3));
         unlink($tmpname);
     }
+
+
 }
 
