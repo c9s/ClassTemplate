@@ -18,7 +18,7 @@ class ClassTemplate
     /**
      * @var TemplateView object.
      */
-    public $view;
+    protected $view;
 
     public $templateFile;
     public $templateDirs;
@@ -156,6 +156,16 @@ class ClassTemplate
         file_put_contents($tmpname, $this->render() );
         return require $tmpname;
     }
+
+
+    public function getView() {
+        return $this->view;
+    }
+
+    public function setView($view) {
+        $this->view = $view;
+    }
+
 
     public function addMsgId($msgId) {
         $this->msgIds[] = $msgId;
