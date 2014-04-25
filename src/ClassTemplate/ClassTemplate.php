@@ -23,6 +23,21 @@ class ClassTemplate
     public $options = array();
     public $msgIds = array();
 
+
+    /**
+     * constructor create a new class template object
+     *
+     * @param string $className
+     * @param array $options 
+     *
+     * a sample options:
+     * 
+     * $t = new ClassTemplate('NewClassFoo',[
+     *   'template_dirs' => [ path1, path2 ],
+     *   'template' => 'Class.php.twig',
+     * ])
+     *
+     */
     public function __construct($className,$options = array())
     {
         if( !isset($options['template_dirs']) ) {
@@ -61,12 +76,10 @@ class ClassTemplate
         $this->interfaces[] = new ClassName($className);
     }
 
-    public function addMethod($scope,$methodName,$arguments = array(),$code = null)
+    public function addMethod($scope,$methodName,$arguments = array(),$body = null, $bodyArguments = array() )
     {
-        $method = new ClassMethod( $methodName, $arguments);
-        $method->scope = $scope;
-        if($code)
-            $method->code = $code;
+        $method = new ClassMethod( $methodName, $arguments, $body , $bodyArguments);
+        $method->setScope($scope);
         $this->methods[] = $method;
         return $method;
     }
