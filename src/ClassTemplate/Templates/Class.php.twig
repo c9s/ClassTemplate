@@ -1,0 +1,32 @@
+<?php
+{% if class.class.namespace %}
+namespace {{ class.class.namespace }};
+{% endif %}
+
+{% for u in class.uses %}
+{{u}}
+{% endfor %}
+class {{ class.class.name }} {% if class.extends %} extends {{ class.extends }} {% endif %}
+{
+{% for con in class.consts %}
+{{con|raw}}
+{% endfor %}
+
+{% for con in class.staticVars %}
+{{con|raw}}
+{% endfor %}
+
+{% for method in class.methods %}
+{{method|raw}}
+{% endfor %}
+
+
+    /**
+     * Code block for message id parser.
+     */
+    private function __() {
+        {% for msgId in class.msgIds %}
+        _('{{msgId}}');
+        {% endfor %}
+    }
+}

@@ -12,7 +12,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
     {
         $class1 = new ClassTemplate\ClassTemplate('Foo\Bar22',array(
             'template' => 'Class.php.twig',
-            'template_dirs' => array('src/LazyRecord/Schema/Templates'),
+            'template_dirs' => array('src/ClassTemplate/Templates'),
         ));
         ok($class1);
 
