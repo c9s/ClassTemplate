@@ -16,6 +16,9 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
         ));
         ok($class1);
 
+        $class1->addProperty('record','Product');
+        $class1->addProperty('fields', [ 'lang', 'name' ] );
+
         $class1->addMethod('public','getTwo',array(),'return 2;');
         $class1->addMethod('public','getFoo',array('i'),'return $i;');
         $code = $class1->render();
@@ -27,6 +30,9 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
 
         $bar22 = new Foo\Bar22;
         ok($bar22);
+
+        is('Product', $bar22->record);
+        is(['lang','name'], $bar22->fields);
 
         ok(method_exists($bar22,'getTwo'));
         ok(method_exists($bar22,'getFoo'));

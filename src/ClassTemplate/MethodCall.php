@@ -10,23 +10,23 @@ class MethodCall
 
     public $arguments = array();
 
-    function __construct($objname = 'this') {
+    public function __construct($objname = 'this') {
         $this->objectName = $objname;
     }
 
-    function method($name) 
+    public function method($name) 
     {
         $this->method = $name;
         return $this;
     }
 
-    function addArgument($arg) 
+    public function addArgument($arg) 
     {
         $this->arguments[] = $arg;
         return $this;
     }
 
-    function render() {
+    public function render() {
         $code = '';
         $code .= '$' . $this->objectName;
         $code .= '->' . $this->method . '(';
