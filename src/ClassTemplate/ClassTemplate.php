@@ -81,7 +81,16 @@ class ClassTemplate
 
     public function extendClass($className)
     {
-        $this->extends = new ClassName($className);
+        if ( $className[0] == '\\' ) {
+            $className = substr($className,1);
+            $this->useClass($className);
+
+            $_p = explode('\\',$className);
+            $shortClassName = end($_p);
+            $this->extends = new ClassName($shortClassName);
+        } else {
+            $this->extends = new ClassName($className);
+        }
     }
 
     public function implementClass($className)
