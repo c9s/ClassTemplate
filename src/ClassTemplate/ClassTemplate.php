@@ -26,6 +26,8 @@ class ClassTemplate
     public $msgIds = array();
 
 
+    public $usedClasses = array();
+
     /**
      * constructor create a new class template object
      *
@@ -74,15 +76,26 @@ class ClassTemplate
         $this->class = new ClassName( $className );
     }
 
-    public function useClass($className)
+    public function useClass($className, $as = null)
     {
-        $this->uses[] = new UseClass( $className );
+        if ( $as ) {
+            if ( isset($this->usedClasses[$as]) ) {
+                return;
+            }
+            $this->usedClasses[$as] = $className;
+        } else {
+            if ( isset($this->usedClasses[$className]) ) {
+                return;
+            }
+            $this->usedClasses[$className] = $className;
+        }
+        $this->uses[] = new UseClass( $className, $as );
     }
 
     public function extendClass($className)
     {
         if ( $className[0] == '\\' ) {
-            $className = substr($className,1);
+            $className = ltrim($className,'\\');
             $this->useClass($className);
 
             $_p = explode('\\',$className);
