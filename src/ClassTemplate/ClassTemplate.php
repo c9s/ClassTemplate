@@ -160,6 +160,11 @@ class ClassTemplate
         return $content;
     }
 
+    public function writeTo($file)
+    {
+        return file_put_contents($file, $this->render());
+    }
+
     public function load() {
         $tmpname = tempnam('/tmp', str_replace('\\','_',$this->class->getFullName()) );
         file_put_contents($tmpname, $this->render() );
