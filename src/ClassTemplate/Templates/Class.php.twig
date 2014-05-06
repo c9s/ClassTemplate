@@ -1,11 +1,16 @@
 <?php
+/**
+This is an auto-generated file,
+Please DO NOT modify this file directly.
+*/
 {% if class.class.namespace %}
 namespace {{ class.class.namespace }};
 {% endif %}
 
 {% for u in class.uses %}
-{{u}}
+{{u|raw}}
 {% endfor %}
+
 class {{ class.class.name }} {% if class.extends %} extends {{ class.extends }} {% endif %}
 {
 {% for con in class.consts %}
