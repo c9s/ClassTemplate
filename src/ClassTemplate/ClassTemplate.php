@@ -92,9 +92,9 @@ class ClassTemplate
         $this->uses[] = new UseClass( $className, $as );
     }
 
-    public function extendClass($className)
+    public function extendClass($className, $absolute = false)
     {
-        if ( $className[0] == '\\' ) {
+        if ( $className[0] == '\\' || $absolute ) {
             $className = ltrim($className,'\\');
             $this->useClass($className);
 
