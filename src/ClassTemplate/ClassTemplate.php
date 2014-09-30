@@ -7,13 +7,20 @@ use ReflectionObject;
 class ClassTemplate
 {
     public $class;
+
     public $extends;
+
     public $interfaces = array();
     public $uses = array();
     public $methods = array();
     public $consts  = array();
     public $properties = array();
     public $staticVars = array();
+
+    /**
+     * Registered trait
+     */
+    public $traits = array();
 
     /**
      * @var TemplateView object.
@@ -202,7 +209,12 @@ class ClassTemplate
         $this->msgIds = $msgIds;
     }
 
-
+    public function addTrait($class) {
+        $classes = func_get_args();
+        $stat = new ClassTrait($classes);
+        $this->traits[] = $stat;
+        return $stat;
+    }
 
 }
 

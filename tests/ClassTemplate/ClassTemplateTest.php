@@ -1,4 +1,19 @@
 <?php
+namespace Foo {
+    trait TraitA { 
+        public function hello() {
+            return 'hello from A';
+        }
+    }
+
+    trait TraitB { 
+        public function hello() {
+            return 'hello from B';
+        }
+    }
+}
+
+namespace {
 
 class ClassTemplateTest extends PHPUnit_Framework_TestCase
 {
@@ -19,6 +34,14 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
         $classTemplate->load();
     }
 
+    public function evalTemplate(ClassTemplate\ClassTemplate $classTemplate)
+    {
+        $code = $classTemplate->render();
+        $tmpname = tempnam('/tmp', preg_replace('/\W/', '_', $classTemplate->class->getFullName()));
+        file_put_contents($tmpname, $code);
+        require $tmpname;
+    }
+
     public function testClassTemplate()
     {
         $classTemplate = new ClassTemplate\ClassTemplate('Foo\\Bar1',array(
@@ -31,10 +54,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
         $classTemplate->addMethod('public','getTwo',array(),'return 2;');
         $classTemplate->addMethod('public','getFoo',array('$i'),'return $i;');
 
-        $code = $classTemplate->render();
-        $tmpname = tempnam('/tmp','FOO');
-        file_put_contents($tmpname, $code);
-        require $tmpname;
+        $this->evalTemplate($classTemplate);
 
         ok(class_exists($classTemplate->class->getFullName()));
 
@@ -50,9 +70,34 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
         is(2,$bar22->getTwo());
 
         is(3,$bar22->getFoo(3));
-        unlink($tmpname);
     }
 
+    public function testTraitUseInsteadOf() {
+        $classTemplate = new ClassTemplate\ClassTemplate('Foo\\TraitTest',array(
+            'template' => 'Class.php.twig',
+            'template_dirs' => array('src/ClassTemplate/Templates'),
+        ));
+        $classTemplate->addTrait('TraitA', 'TraitB')
+            ->useInsteadOf('TraitA::hello', 'TraitB');
+        $this->evalTemplate($classTemplate);
+    }
+
+    public function testTraitUseAs() {
+        $classTemplate = new ClassTemplate\ClassTemplate('Foo\\TraitUseAsTest',array(
+            'template' => 'Class.php.twig',
+            'template_dirs' => array('src/ClassTemplate/Templates'),
+        ));
+        $classTemplate->addTrait('TraitA', 'TraitB')
+            ->useInsteadOf('TraitB::hello', 'TraitA')
+            ->useAs('TraitA::hello', 'talk');
+        $this->evalTemplate($classTemplate);
+
+        $foo = new Foo\TraitUseAsTest;
+        ok($foo);
+        is('hello from A',$foo->talk());
+        is('hello from B',$foo->hello());
+    }
 
 }
 
+}
