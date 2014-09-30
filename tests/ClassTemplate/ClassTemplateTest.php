@@ -77,7 +77,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));
-        $classTemplate->addTrait('TraitA', 'TraitB')
+        $classTemplate->useTrait('TraitA', 'TraitB')
             ->useInsteadOf('TraitA::hello', 'TraitB');
         $this->evalTemplate($classTemplate);
     }
@@ -87,7 +87,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));
-        $classTemplate->addTrait('TraitA', 'TraitB')
+        $classTemplate->useTrait('TraitA', 'TraitB')
             ->useInsteadOf('TraitB::hello', 'TraitA')
             ->useAs('TraitA::hello', 'talk');
         $this->evalTemplate($classTemplate);

@@ -3,6 +3,7 @@ namespace ClassTemplate;
 use Exception;
 use ReflectionClass;
 use ReflectionObject;
+use ClassTemplate\ClassTrait;
 
 class ClassTemplate
 {
@@ -209,11 +210,15 @@ class ClassTemplate
         $this->msgIds = $msgIds;
     }
 
-    public function addTrait($class) {
+    public function addTrait(ClassTrait $trait) {
+        $this->traits[] = $trait;
+    }
+
+    public function useTrait($class) {
         $classes = func_get_args();
-        $stat = new ClassTrait($classes);
-        $this->traits[] = $stat;
-        return $stat;
+        $trait = new ClassTrait($classes);
+        $this->addTrait($trait);
+        return $trait;
     }
 
 }
