@@ -42,11 +42,11 @@ class Block
     }
 
     public function render($args = array(), $allowIndent = true) {
-        if ($allowIndent) {
+        if (!$allowIndent && !$this->autoIndent ) {
+            $body = $space . join("\n",$this->lines) . "\n";
+        } else {
             $space = str_repeat("    ", $this->indent);
             $body = $space . join("\n" . $space,$this->lines) . "\n";
-        } else {
-            $body = $space . join("\n",$this->lines) . "\n";
         }
         return Utils::renderStringTemplate($body, array_merge($this->args,$args));
     }
