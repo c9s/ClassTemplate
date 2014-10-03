@@ -32,10 +32,6 @@ class UserFunction extends Statement
         if ($bodyArguments) {
             $this->block->setDefaultArguments($bodyArguments);
         }
-        /*
-        $this->body = $body;
-        $this->bodyArguments = $bodyArguments;
-        */
     }
 
     public function getBlock() {
@@ -52,13 +48,11 @@ class UserFunction extends Statement
         return join(', ', $this->arguments);
     }
 
-    protected function renderBody($indent = 0) 
-    {
-        return "{\n" . $this->getBlock()->render() . "}\n" ;
-    }
-
     public function render() {
-        return 'function ' . $this->name . '(' . $this->renderArguments() . ') ' . $this->renderBody();
+        return 'function ' . $this->name . '(' . $this->renderArguments() . ') '
+            . "{\n" 
+            . $this->getBlock()->render() 
+            . "}\n";
     }
 
 

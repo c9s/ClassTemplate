@@ -119,10 +119,14 @@ class ClassTemplate
         $this->interfaces[] = new ClassName($className);
     }
 
-    public function addMethod($scope,$methodName,$arguments = array(),$body = null, $bodyArguments = array() )
+    public function addMethod($scope,$methodName,$arguments = array(),$body = null, $bodyArguments = array(), $autoIndent = true)
     {
         $method = new ClassMethod( $methodName, $arguments, $body , $bodyArguments);
         $method->setScope($scope);
+        $block = $method->getBlock();
+        $block->setBody($body);
+        $block->autoIndent($autoIndent);
+        $block->setDefaultArguments($bodyArguments);
         $this->methods[] = $method;
         return $method;
     }

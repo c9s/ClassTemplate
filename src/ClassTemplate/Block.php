@@ -10,9 +10,15 @@ class Block
 
     public $indent = 0;
 
+    public $autoIndent = true;
+
     public function setDefaultArguments(array $args)
     {
         $this->args = $args;
+    }
+
+    public function autoIndent($v = true) {
+        $this->autoIndent = $v;
     }
 
     public function setBody($text) {

@@ -11,15 +11,14 @@ class ClassMethod extends UserFunction
         $this->scope = $scope;
     }
 
-    protected function renderBody($indent = 0) 
-    {
-        return "{\n" . $this->getBlock()->render() . Utils::indent(1) . "}\n" ;
-    }
-
     public function render()
     {
-        return Utils::indent(1)  . $this->scope . ' function ' . $this->name . '(' . $this->renderArguments() . ') '
-            . $this->renderBody(1);
+        $block = $this->getBlock();
+        $block->setIndent(1);
+        return Utils::indent(1)  . $this->scope . ' function ' . $this->name . '(' . $this->renderArguments() . ') ' 
+            . "{\n" 
+            . $block->render() 
+            . "}\n";
     }
 
 
