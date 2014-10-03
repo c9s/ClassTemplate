@@ -41,7 +41,7 @@ class UserFunction extends Statement
     protected function renderBody($indent = 0) 
     {
         // XXX: we don't indent the body for now, just keep what it is.
-        return Utils::renderStringTemplate($this->body, $this->bodyArguments);
+        return "{\n" . Utils::renderStringTemplate($this->body, $this->bodyArguments) . "\n}\n";
 
         $body = '';
         $lines = explode("\n", Utils::renderStringTemplate($this->body, $this->bodyArguments) );
