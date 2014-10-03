@@ -42,7 +42,7 @@ class Block
     }
 
     public function render($args = array(), $allowIndent = true) {
-        if (!$allowIndent && !$this->autoIndent ) {
+        if (!$allowIndent || !$this->autoIndent ) {
             $body = $space . join("\n",$this->lines) . "\n";
         } else {
             $space = str_repeat("    ", $this->indent);
