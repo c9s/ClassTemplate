@@ -57,7 +57,7 @@ class ClassTemplate
         if( !isset($options['template_dirs']) ) {
             $ro = new ReflectionObject($this);
             $dir = dirname($ro->getFilename()) . DIRECTORY_SEPARATOR . 'Templates';
-            $options['template_dirs'] = [ $dir ];
+            $options['template_dirs'] = array($dir);
         }
         if( !isset($options['template']) ) {
             $options['template'] = 'Class.php.twig';
