@@ -6,10 +6,17 @@ class Block
 {
     public $lines = array();
 
+    public $args = array();
+
     public $indent = 0;
 
     public function __construct()
     {
+    }
+
+    public function setDefaultArguments(array $args)
+    {
+        $this->args = $args;
     }
 
     public function setBody($text) {
@@ -37,7 +44,7 @@ class Block
         $space = str_repeat("    ", $this->indent);
         $body = $space
              . join("\n" . $space,$this->lines) . "\n";
-        return Utils::renderStringTemplate($body, $args);
+        return Utils::renderStringTemplate($body, array_merge($this->args,$args));
     }
 
 }

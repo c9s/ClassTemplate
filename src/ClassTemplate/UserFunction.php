@@ -1,5 +1,6 @@
 <?php
 namespace ClassTemplate;
+use ClassTemplate\Block;
 
 class UserFunction extends Statement
 {
@@ -8,6 +9,8 @@ class UserFunction extends Statement
 
     public $body;
     public $bodyArguments = array();
+
+    public $block;
 
     /**
      * Class Method Constructor
@@ -21,7 +24,14 @@ class UserFunction extends Statement
     {
         $this->name = $name;
         $this->arguments = $arguments;
+
+        $this->block = new Block;
+        if ($body) {
+            $this->block->setBody($body);
+        }
+
         $this->body = $body;
+
         $this->bodyArguments = $bodyArguments;
     }
 
