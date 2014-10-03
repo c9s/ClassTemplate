@@ -29,13 +29,17 @@ class UserFunction extends Statement
         if ($body) {
             $this->block->setBody($body);
         }
-
+        if ($bodyArguments) {
+            $this->block->setDefaultArguments($bodyArguments);
+        }
+        /*
         $this->body = $body;
-
         $this->bodyArguments = $bodyArguments;
+        */
     }
 
-    public function setBody($body, $args = array()) {
+    public function getBlock() {
+        return $this->block;
     }
 
     public function setArguments($args) 
@@ -50,15 +54,7 @@ class UserFunction extends Statement
 
     protected function renderBody($indent = 0) 
     {
-        // XXX: we don't indent the body for now, just keep what it is.
-        return "{\n" . Utils::renderStringTemplate($this->body, $this->bodyArguments) . "\n}\n";
-
-        $body = '';
-        $lines = explode("\n", Utils::renderStringTemplate($this->body, $this->bodyArguments) );
-        foreach( $lines as $line ) {
-            $body .= Utils::indent( $indent + 1 ) . $line . "\n";
-        }
-        return "{\n" . $body . Utils::indent($indent)  . "}\n";
+        return "{\n" . $this->getBlock()->render() . "}\n" ;
     }
 
     public function render() {

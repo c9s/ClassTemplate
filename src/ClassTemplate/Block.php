@@ -10,10 +10,6 @@ class Block
 
     public $indent = 0;
 
-    public function __construct()
-    {
-    }
-
     public function setDefaultArguments(array $args)
     {
         $this->args = $args;
@@ -39,11 +35,13 @@ class Block
         $this->indent = $indent;
     }
 
-
-    public function render($args = array()) {
-        $space = str_repeat("    ", $this->indent);
-        $body = $space
-             . join("\n" . $space,$this->lines) . "\n";
+    public function render($args = array(), $allowIndent = true) {
+        if ($allowIndent) {
+            $space = str_repeat("    ", $this->indent);
+            $body = $space . join("\n" . $space,$this->lines) . "\n";
+        } else {
+            $body = $space . join("\n",$this->lines) . "\n";
+        }
         return Utils::renderStringTemplate($body, array_merge($this->args,$args));
     }
 
