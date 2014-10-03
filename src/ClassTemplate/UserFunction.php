@@ -34,11 +34,17 @@ class UserFunction extends Statement
         }
     }
 
+
+    public function setBlock(Block $block)
+    {
+        $this->block = $block;
+    }
+
     public function getBlock() {
         return $this->block;
     }
 
-    public function setArguments($args) 
+    public function setArguments(array $args) 
     {
         $this->arguments = $args;
     }
