@@ -1,6 +1,7 @@
 <?php
 namespace ClassTemplate;
 use ClassTemplate\Utils;
+use InvalidArgumentException;
 
 class Block
 {
@@ -21,8 +22,18 @@ class Block
         $this->autoIndent = $v;
     }
 
+
+    /**
+     * Allow text can be set with array
+     */
     public function setBody($text) {
-        $this->lines = explode("\n", $text);
+        if (is_string($text)) {
+            $this->lines = explode("\n", $text);
+        } elseif (is_array($text)) {
+            $this->lines = $text;
+        } else {
+            throw new InvalidArgumentException("Invalid body type");
+        }
     }
 
     public function appendLine($line) {
@@ -46,7 +57,7 @@ class Block
             $body = join("\n",$this->lines) . "\n";
         } else {
             $space = str_repeat("    ", $this->indent);
-            $body = $space . join("\n" . $space,$this->lines) . "\n";
+            $body = $space . join("\n" . $space, $this->lines) . "\n";
         }
         return Utils::renderStringTemplate($body, array_merge($this->args,$args));
     }
