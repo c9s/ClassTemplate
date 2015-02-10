@@ -86,18 +86,18 @@ class ClassTemplate
 
     public function useClass($className, $as = null)
     {
-        if ( $as ) {
-            if ( isset($this->usedClasses[$as]) ) {
+        if ($as) {
+            if (isset($this->usedClasses[$as])) {
                 return;
             }
             $this->usedClasses[$as] = $className;
         } else {
-            if ( isset($this->usedClasses[$className]) ) {
+            if (isset($this->usedClasses[$className])) {
                 return;
             }
             $this->usedClasses[$className] = $className;
         }
-        $this->uses[] = new UseClass( $className, $as );
+        $this->uses[] = new UseClass($className, $as);
     }
 
     public function extendClass($className, $absolute = false)
@@ -220,6 +220,14 @@ class ClassTemplate
 
     public function useTrait($class) {
         $classes = func_get_args();
+        $self = $this;
+        $classes = array_map(function($fullClassName) use($self) {
+            // split classnames into "use" statement 
+            $p = explode('\\',$fullClassName);
+            $className = end($p);
+            $this->useClass($fullClassName);
+            return $className;
+        }, $classes);
         $trait = new ClassTrait($classes);
         $this->addTrait($trait);
         return $trait;
