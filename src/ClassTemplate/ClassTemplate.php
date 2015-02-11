@@ -223,9 +223,11 @@ class ClassTemplate
         $self = $this;
         $classes = array_map(function($fullClassName) use($self) {
             // split classnames into "use" statement 
-            $p = explode('\\',$fullClassName);
+            $p = explode('\\',ltrim($fullClassName,'\\'));
             $className = end($p);
-            $this->useClass($fullClassName);
+            if (count($p) > 1) {
+                $this->useClass($fullClassName);
+            }
             return $className;
         }, $classes);
         $trait = new ClassTrait($classes);
