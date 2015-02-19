@@ -19,9 +19,9 @@ class ClassProperty extends Statement
     {
         $code = $this->scope . ' $' . $this->name;
         if ( $this->value ) {
-            $code .= ' = ' . var_export($this->value,true) . ';';
+            $code .= ' = ' . var_export($this->value,true);
         }
-        return $code;
+        return $code . ';';
     }
 
 }
