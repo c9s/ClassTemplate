@@ -1,6 +1,7 @@
 <?php
 namespace ClassTemplate;
 use ClassTemplate\Utils;
+use ClassTemplate\Renderable;
 use InvalidArgumentException;
 use ArrayAccess;
 use IteratorAggregate;
@@ -55,6 +56,11 @@ class Block implements IteratorAggregate, ArrayAccess
         } else {
             throw new InvalidArgumentException("Invalid body type");
         }
+    }
+
+    public function appendRenderable(Renderable $obj)
+    {
+        $this->lines[] = $line;
     }
 
     public function appendLine($line) {
