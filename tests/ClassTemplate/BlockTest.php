@@ -47,6 +47,16 @@ class BlockTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('$b = 2;', $block[1]);
     }
 
+    public function testIndentation() {
+        $block = new Block;
+        $block->indent();
+        $block[] = '$a = 1;';
+        $block[] = '$b = 2;';
+        $block[] = '$c = 3;';
+        $code = $block->render();
+        $this->assertStringEqualsFile('tests/data/simple_block.fixture', $code);
+    }
+
 
 }
 

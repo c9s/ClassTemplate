@@ -60,6 +60,16 @@ class Block implements IteratorAggregate, ArrayAccess
         $this->lines[] = $line;
     }
 
+    public function increaseIndentLevel() {
+        $this->indentLevel++;
+        return $this;
+    }
+
+    public function decreaseIndentLevel() {
+        $this->indentLevel--;
+        return $this;
+    }
+
     public function indent() 
     {
         $this->indentLevel++;
