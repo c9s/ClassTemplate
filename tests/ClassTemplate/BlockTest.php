@@ -47,7 +47,7 @@ class BlockTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('$b = 2;', $block[1]);
     }
 
-    public function testIndentation() {
+    public function testSingleLevelIndentation() {
         $block = new Block;
         $block->indent();
         $block[] = '$a = 1;';
@@ -57,6 +57,23 @@ class BlockTest extends PHPUnit_Framework_TestCase
         $this->assertStringEqualsFile('tests/data/simple_block.fixture', $code);
     }
 
+
+    public function testMultiLevelIndentation() {
+        $block = new Block;
+        $block->increaseIndentLevel();
+        $block[] = '$a = 1;';
+        $block[] = '$b = 2;';
+        $block[] = '$c = 3;';
+        $block[] = '{';
+        $subBlock = new Block;
+        $subBlock->increaseIndentLevel();
+        $subBlock[] = '$f = $a + $b;';
+        $subBlock[] = '$g = $b + $c;';
+        $block[] = $subBlock;
+        $block[] = '}';
+        $code = $block->render();
+        $this->assertStringEqualsFile('tests/data/multi_level_block.fixture', $code);
+    }
 
 }
 

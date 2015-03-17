@@ -16,7 +16,7 @@ use ArrayIterator;
  * stringify-able objects (support __toString() method) or 
  * implemented with Renderable interface.
  */
-class Block implements IteratorAggregate, ArrayAccess
+class Block implements IteratorAggregate, ArrayAccess, Renderable
 {
     public $lines = array();
 
@@ -97,7 +97,11 @@ class Block implements IteratorAggregate, ArrayAccess
             if (is_string($line)) {
                 $body .= $space . $line . "\n";
             } else if ($line instanceof Renderable) {
-                $body .= $space . $line->render() . "\n";
+                $subbody = rtrim($line->render()); // trim the trailing white-space
+                $sublines = explode("\n", $subbody);
+                foreach($sublines as $subline) {
+                    $body .= $space . $subline . "\n";
+                }
             } else {
                 throw new Exception("Unsupported line object.");
             }
