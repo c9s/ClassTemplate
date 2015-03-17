@@ -87,12 +87,17 @@ class Block implements IteratorAggregate, ArrayAccess
         $this->indent = $indent;
     }
 
-    public function render($args = array(), $allowIndent = true) {
-        if (!$allowIndent || !$this->autoIndent ) {
-            $body = join("\n",$this->lines) . "\n";
-        } else {
-            $space = str_repeat("    ", $this->indent);
-            $body = $space . join("\n" . $space, $this->lines) . "\n";
+    public function render(array $args = array()) {
+        $space = str_repeat("    ", $this->indent);
+        $body = '';
+        foreach($this->lines as $line) {
+            if (is_string($line)) {
+                $body .= $space . $line . "\n";
+            } else if ($line instanceof Renderable) {
+                $body .= $space . $line->render() . "\n";
+            } else {
+                throw new Exception("Unsupported line object.");
+            }
         }
         return Utils::renderStringTemplate($body, array_merge($this->args,$args));
     }
