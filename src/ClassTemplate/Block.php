@@ -25,13 +25,7 @@ class Block implements IteratorAggregate, ArrayAccess
     /**
      * The default indent level.
      */
-    public $indent = 0;
-
-    /**
-     * Auto indent is supported by default
-     */
-    public $autoIndent = true;
-
+    public $indentLevel = 0;
 
     public function setDefaultArguments(array $args)
     {
@@ -39,11 +33,10 @@ class Block implements IteratorAggregate, ArrayAccess
         return $this;
     }
 
-    public function autoIndent($v = true) {
-        $this->autoIndent = $v;
+    public function setLines(array $lines) {
+        $this->lines = $lines;
         return $this;
     }
-
 
     /**
      * Allow text can be set with array
@@ -69,12 +62,12 @@ class Block implements IteratorAggregate, ArrayAccess
 
     public function indent() 
     {
-        $this->indent++;
+        $this->indentLevel++;
     }
 
     public function unindent()
     {
-        $this->indent--;
+        $this->indentLevel--;
     }
 
     public function splice($from, $length, array $replacement = array()) 
@@ -84,11 +77,11 @@ class Block implements IteratorAggregate, ArrayAccess
 
 
     public function setIndent($indent) {
-        $this->indent = $indent;
+        $this->indentLevel = $indent;
     }
 
     public function render(array $args = array()) {
-        $space = str_repeat("    ", $this->indent);
+        $space = str_repeat("    ", $this->indentLevel);
         $body = '';
         foreach($this->lines as $line) {
             if (is_string($line)) {

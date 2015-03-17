@@ -125,7 +125,6 @@ class ClassTemplate
         $method->setScope($scope);
         $block = $method->getBlock();
         $block->setBody($body);
-        $block->autoIndent($autoIndent);
         $block->setDefaultArguments($bodyArguments);
         $this->methods[] = $method;
         return $method;
