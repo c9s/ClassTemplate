@@ -2,24 +2,48 @@
 namespace ClassTemplate;
 use ClassTemplate\Utils;
 use InvalidArgumentException;
+use ArrayAccess;
+use IteratorAggregate;
+use ArrayIterator;
 
-class Block
+
+/**
+ * A block class can generate multiple-linke block code.
+ *
+ * It uses line-based unit to generate code, however the added 
+ * element doesn't have to be string, it can be anything 
+ * stringify-able objects (support __toString() method) or 
+ * implemented with Renderable interface.
+ */
+class Block implements IteratorAggregate, ArrayAccess
 {
     public $lines = array();
 
     public $args = array();
 
+    /**
+     * The default indent level.
+     */
     public $indent = 0;
 
+    /**
+     * Auto indent is supported by default
+     */
     public $autoIndent = true;
+
+    public function getIterator() {
+        return new ArrayIterator($this->lines);
+    }
 
     public function setDefaultArguments(array $args)
     {
         $this->args = $args;
+        return $this;
     }
 
     public function autoIndent($v = true) {
         $this->autoIndent = $v;
+        return $this;
     }
 
 
@@ -40,13 +64,21 @@ class Block
         $this->lines[] = $line;
     }
 
-    public function indent() {
+    public function indent() 
+    {
         $this->indent++;
     }
 
-    public function unindent() {
+    public function unindent()
+    {
         $this->indent--;
     }
+
+    public function splice($from, $length, array $replacement = array()) 
+    {
+        return array_splice($this->lines, $from, $length, $replacement);
+    }
+
 
     public function setIndent($indent) {
         $this->indent = $indent;
@@ -61,6 +93,32 @@ class Block
         }
         return Utils::renderStringTemplate($body, array_merge($this->args,$args));
     }
+
+    
+    public function offsetSet($key,$value)
+    {
+        if ($key) {
+            $this->lines[$key] = $value;
+        } else {
+            $this->lines[] = $value;
+        }
+    }
+    
+    public function offsetExists($key)
+    {
+        return isset($this->lines[ $key ]);
+    }
+    
+    public function offsetGet($key)
+    {
+        return $this->lines[ $key ];
+    }
+    
+    public function offsetUnset($key)
+    {
+        unset($this->lines[$name]);
+    }
+    
 
 }
 
