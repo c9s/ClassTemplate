@@ -1,8 +1,9 @@
 <?php
 namespace ClassTemplate;
 use ClassTemplate\Utils;
+use ClassTemplate\Renderable;
 
-class ClassMethod extends UserFunction
+class ClassMethod extends UserFunction implements Renderable
 {
     public $scope = 'public';
 

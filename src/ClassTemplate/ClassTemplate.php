@@ -4,8 +4,9 @@ use Exception;
 use ReflectionClass;
 use ReflectionObject;
 use ClassTemplate\ClassTrait;
+use ClassTemplate\Renderable;
 
-class ClassTemplate
+class ClassTemplate implements Renderable
 {
     public $class;
 
@@ -170,6 +171,7 @@ class ClassTemplate
     public function addStaticVar($name, $value, $scope = 'public') 
     {
         $this->staticVars[] = new ClassStaticVariable($name, $value, $scope);
+        return $this;
     }
 
 
@@ -193,7 +195,7 @@ class ClassTemplate
         $this->view->__set($n,$v);
     }
 
-    public function render($args = array())
+    public function render(array $args = array())
     {
         foreach( $args as $n => $v ) {
             $this->view->__set($n,$v);

@@ -2,8 +2,9 @@
 namespace ClassTemplate;
 use ClassTemplate\Block;
 use ClassTemplate\BracketedBlock;
+use ClassTemplate\Renderable;
 
-class UserFunction extends Statement
+class UserFunction extends Statement implements Renderable
 {
     public $name;
     public $arguments = array();
