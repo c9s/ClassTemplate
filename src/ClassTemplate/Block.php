@@ -31,9 +31,6 @@ class Block implements IteratorAggregate, ArrayAccess
      */
     public $autoIndent = true;
 
-    public function getIterator() {
-        return new ArrayIterator($this->lines);
-    }
 
     public function setDefaultArguments(array $args)
     {
@@ -94,7 +91,13 @@ class Block implements IteratorAggregate, ArrayAccess
         return Utils::renderStringTemplate($body, array_merge($this->args,$args));
     }
 
-    
+    // ============ interface ArrayAggregator implementation =============
+    public function getIterator() 
+    {
+        return new ArrayIterator($this->lines);
+    }
+
+    // ============ interface ArrayAccess implementation =============
     public function offsetSet($key,$value)
     {
         if ($key) {
