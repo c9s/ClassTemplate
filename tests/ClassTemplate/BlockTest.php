@@ -17,7 +17,7 @@ class BlockTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, $ret);
     }
 
-    public function testAppendLineMethod() {
+    public function testAppendLineMethodAndArrayAggregate() {
         $block = new Block;
         $block->appendLine('$a = 1;');
         $block->appendLine('$b = 2;');
