@@ -119,7 +119,7 @@ class ClassTemplate
         $this->interfaces[] = new ClassName($className);
     }
 
-    public function addMethod($scope,$methodName, array $arguments = array(), $body = array(), array $bodyArguments = array(), $autoIndent = true)
+    public function addMethod($scope, $methodName, array $arguments = array(), $body = array(), array $bodyArguments = array(), $autoIndent = true)
     {
         $method = new ClassMethod( $methodName, $arguments, $body, $bodyArguments);
         $method->setScope($scope);
@@ -145,10 +145,27 @@ class ClassTemplate
         }
     }
 
-    public function addProperty($name,$value,$scope = 'public')
+    public function addProperty($name, $value, $scope = 'public')
     {
-        $this->properties[] = new ClassProperty($name,$value,$scope);
+        $this->properties[] = new ClassProperty($name, $value, $scope);
+        return $this;
     }
+
+    public function addPublicProperty($name, $value)
+    {
+        return $this->addProperty($name, $value, 'public');
+    }
+
+    public function addProtectedProperty($name, $value)
+    {
+        return $this->addProperty($name, $value, 'protected');
+    }
+
+    public function addPrivateProperty($name, $value)
+    {
+        return $this->addProperty($name, $value, 'private');
+    }
+
 
     public function addStaticVar($name, $value, $scope = 'public') 
     {
