@@ -15,7 +15,7 @@ class ClassMethod extends UserFunction
     {
         $block = $this->getBlock();
         $block->setIndent(1);
-        return Utils::indent(1)  . $this->scope . ' function ' . $this->name . '(' . $this->renderArguments() . ") \n" 
+        return Utils::indent(1)  . $this->scope . ' function ' . $this->name . '(' . $this->renderArguments() . ")\n" 
             . $block->render($args)
             ;
     }
