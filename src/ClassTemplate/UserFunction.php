@@ -1,6 +1,7 @@
 <?php
 namespace ClassTemplate;
 use ClassTemplate\Block;
+use ClassTemplate\BracketedBlock;
 
 class UserFunction extends Statement
 {
@@ -20,12 +21,12 @@ class UserFunction extends Statement
      * @param string $body the code of the function.
      * @param array $bodyArguments the template arguments of the code of the function.
      */
-    public function __construct($name, $arguments = array(), $body = '', $bodyArguments = array() )
+    public function __construct($name, array $arguments = array(), $body = '', array $bodyArguments = array() )
     {
         $this->name = $name;
         $this->arguments = $arguments;
 
-        $this->block = new Block;
+        $this->block = new BracketedBlock;
         if ($body) {
             $this->block->setBody($body);
         }
@@ -54,13 +55,10 @@ class UserFunction extends Statement
         return join(', ', $this->arguments);
     }
 
-    public function render() {
-        return 'function ' . $this->name . '(' . $this->renderArguments() . ') '
-            . "{\n" 
-            . $this->getBlock()->render() 
-            . "}\n";
+    public function render(array $args = array()) {
+        return 'function ' . $this->name . '(' . $this->renderArguments() . ")\n"
+            . $this->getBlock()->render($args);
     }
-
 
 }
 

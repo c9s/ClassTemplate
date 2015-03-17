@@ -1,6 +1,6 @@
 <?php
 
-class UserFunctionTest extends PHPUnit_Framework_TestCase
+class UserFunctionEvaluationTest extends PHPUnit_Framework_TestCase
 {
     public function testUserFunc()
     {

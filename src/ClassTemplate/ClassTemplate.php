@@ -124,8 +124,12 @@ class ClassTemplate
         $method = new ClassMethod( $methodName, $arguments, $body, $bodyArguments);
         $method->setScope($scope);
         $block = $method->getBlock();
-        $block->setBody($body);
-        $block->setDefaultArguments($bodyArguments);
+        if (!empty($body)) {
+            $block->setBody($body);
+        }
+        if (!empty($bodyArguments)) {
+            $block->setDefaultArguments($bodyArguments);
+        }
         $this->methods[] = $method;
         return $method;
     }
