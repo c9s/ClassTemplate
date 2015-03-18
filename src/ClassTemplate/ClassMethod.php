@@ -2,6 +2,7 @@
 namespace ClassTemplate;
 use ClassTemplate\Utils;
 use ClassTemplate\Renderable;
+use ClassTemplate\Indenter;
 
 class ClassMethod extends UserFunction implements Renderable
 {
@@ -16,9 +17,13 @@ class ClassMethod extends UserFunction implements Renderable
     {
         $block = $this->getBlock();
         $block->setIndent(1);
-        return Utils::indent(1)  . $this->scope . ' function ' . $this->name . '(' . $this->renderArguments() . ")\n" 
+        return Indenter::indent(1)  . $this->scope . ' function ' . $this->name . '(' . $this->renderArguments() . ")\n" 
             . $block->render($args)
             ;
+    }
+
+    public function __toString() {
+        return $this->render();
     }
 
 

@@ -7,7 +7,7 @@ use ClassTemplate\ClassTrait;
 use ClassTemplate\Renderable;
 use ClassTemplate\ClassDeclare;
 
-class TemplateClass extends ClassDeclare implements Renderable
+class TemplateClassDeclare extends ClassDeclare implements Renderable
 {
     /**
      * @var TemplateView object.

@@ -1,7 +1,8 @@
 <?php
 namespace ClassTemplate;
+use ClassTemplate\Renderable;
 
-class ClassName extends Statement
+class ClassName extends Statement implements Renderable
 {
     public $name;
     public $namespace;
@@ -40,10 +41,14 @@ class ClassName extends Statement
         }
     }
 
-    public function render()
+    public function render(array $args = array())
     {
         return $this->getFullName();
     }
 
+
+    public function __toString() {
+        return $this->render();
+    }
 }
 

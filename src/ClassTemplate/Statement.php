@@ -1,8 +1,8 @@
 <?php
 namespace ClassTemplate;
+use ClassTemplate\Renderable;
 
 abstract class Statement {
-    abstract public function render();
 
     public function __toString()
     {

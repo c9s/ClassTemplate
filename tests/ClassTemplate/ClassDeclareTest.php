@@ -14,8 +14,10 @@ namespace Foo {
 }
 
 namespace {
+use ClassTemplate\Testing\CodeGenTestCase;
+use ClassTemplate\ClassDeclare;
 
-class ClassTemplateTest extends PHPUnit_Framework_TestCase
+class ClassDeclareTest extends CodeGenTestCase
 {
     public function testUse()
     {
@@ -26,11 +28,11 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
     public function testClassTemplateWithDefaultOptions() 
     {
         $classTemplate = new ClassTemplate\ClassDeclare('Foo\\Bar2');
-        ok($classTemplate);
         $classTemplate->addProperty('record','Product');
         $classTemplate->addProperty('fields', [ 'lang', 'name' ] );
         $classTemplate->addMethod('public','getTwo',array(),'return 2;');
         $classTemplate->addMethod('public','getFoo',array('$i'),'return $i;');
+        $this->assertCodeEqualsFile('tests/data/class_simple.fixture', $classTemplate);
         $classTemplate->load();
     }
 

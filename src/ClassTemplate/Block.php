@@ -2,10 +2,12 @@
 namespace ClassTemplate;
 use ClassTemplate\Utils;
 use ClassTemplate\Renderable;
+use ClassTemplate\Indenter;
 use InvalidArgumentException;
 use ArrayAccess;
 use IteratorAggregate;
 use ArrayIterator;
+use Exception;
 
 
 /**
@@ -91,16 +93,16 @@ class Block implements IteratorAggregate, ArrayAccess, Renderable
     }
 
     public function render(array $args = array()) {
-        $space = str_repeat("    ", $this->indentLevel);
+        $tab = Indenter::indent($this->indentLevel);
         $body = '';
         foreach($this->lines as $line) {
             if (is_string($line)) {
-                $body .= $space . $line . "\n";
+                $body .= $tab . $line . "\n";
             } else if ($line instanceof Renderable) {
                 $subbody = rtrim($line->render()); // trim the trailing white-space
                 $sublines = explode("\n", $subbody);
                 foreach($sublines as $subline) {
-                    $body .= $space . $subline . "\n";
+                    $body .= $tab . $subline . "\n";
                 }
             } else {
                 throw new Exception("Unsupported line object.");

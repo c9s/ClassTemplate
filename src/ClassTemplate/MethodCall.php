@@ -1,8 +1,9 @@
 <?php
 namespace ClassTemplate;
 use Exception;
+use ClassTemplate\Renderable;
 
-class MethodCall extends Statement
+class MethodCall extends Statement implements Renderable
 {
     public $objectName;
 
@@ -26,7 +27,7 @@ class MethodCall extends Statement
         return $this;
     }
 
-    public function render() {
+    public function render(array $args = array()) {
         $code = '';
         $code .= '$' . $this->objectName;
         $code .= '->' . $this->method . '(';
@@ -52,6 +53,10 @@ class MethodCall extends Statement
         return $code;
     }
 
+    public function __toString() {
+        return $this->render();
+    }
+    
 }
 
 

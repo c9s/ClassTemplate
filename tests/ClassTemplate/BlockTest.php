@@ -1,7 +1,8 @@
 <?php
 use ClassTemplate\Block;
+use ClassTemplate\Testing\CodeGenTestCase;
 
-class BlockTest extends PHPUnit_Framework_TestCase
+class BlockTest extends CodeGenTestCase
 {
     public function testBlockWithSetBody()
     {
@@ -49,12 +50,11 @@ class BlockTest extends PHPUnit_Framework_TestCase
 
     public function testSingleLevelIndentation() {
         $block = new Block;
-        $block->indent();
+        $block->increaseIndentLevel();
         $block[] = '$a = 1;';
         $block[] = '$b = 2;';
         $block[] = '$c = 3;';
-        $code = $block->render();
-        $this->assertStringEqualsFile('tests/data/simple_block.fixture', $code);
+        $this->assertCodeEqualsFile('tests/data/simple_block.fixture', $block);
     }
 
 
@@ -71,8 +71,7 @@ class BlockTest extends PHPUnit_Framework_TestCase
         $subBlock[] = '$g = $b + $c;';
         $block[] = $subBlock;
         $block[] = '}';
-        $code = $block->render();
-        $this->assertStringEqualsFile('tests/data/multi_level_block.fixture', $code);
+        $this->assertCodeEqualsFile('tests/data/multi_level_block.fixture', $block);
     }
 
 }

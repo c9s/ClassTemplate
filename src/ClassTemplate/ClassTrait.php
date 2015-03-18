@@ -1,5 +1,6 @@
 <?php
 namespace ClassTemplate;
+use ClassTemplate\Renderable;
 
 /**
  * use HelloWorld { sayHello as private myPrivateHello; }
@@ -18,7 +19,7 @@ namespace ClassTemplate;
  *    }
  * }
  */
-class ClassTrait
+class ClassTrait implements Renderable
 {
     public $classes = array();
 
@@ -39,9 +40,8 @@ class ClassTrait
         return $this;
     }
 
-    public function __toString() {
+    public function render(array $args = array()) {
         $out = "use " . join(', ', $this->classes);
-
         if (empty($this->definitions)) {
             $out .= ";";
         } else {
@@ -52,6 +52,10 @@ class ClassTrait
             $out .= "}\n";
         }
         return $out;
+    }
+
+    public function __toString() {
+        return $this->render();
     }
 }
 

@@ -3,6 +3,7 @@ namespace ClassTemplate;
 use ClassTemplate\Block;
 use ClassTemplate\BracketedBlock;
 use ClassTemplate\Renderable;
+use ClassTemplate\Indenter;
 
 class UserFunction extends Statement implements Renderable
 {

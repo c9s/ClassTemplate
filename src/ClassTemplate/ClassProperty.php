@@ -1,7 +1,8 @@
 <?php
 namespace ClassTemplate;
+use ClassTemplate\Renderable;
 
-class ClassProperty extends Statement
+class ClassProperty extends Statement implements Renderable
 {
     public $name;
     public $scope = 'public';
@@ -15,7 +16,7 @@ class ClassProperty extends Statement
     }
 
 
-    public function render()
+    public function render(array $args = array())
     {
         $code = $this->scope . ' $' . $this->name;
         if ( $this->value ) {
@@ -23,6 +24,11 @@ class ClassProperty extends Statement
         }
         return $code . ';';
     }
+
+    public function __toString() {
+        return $this->render();
+    }
+    
 
 }
 

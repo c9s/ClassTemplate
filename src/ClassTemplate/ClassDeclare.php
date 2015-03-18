@@ -5,6 +5,7 @@ use ReflectionClass;
 use ReflectionObject;
 use ClassTemplate\ClassTrait;
 use ClassTemplate\Renderable;
+use ClassTemplate\BracketedBlock;
 
 class ClassDeclare implements Renderable
 {
@@ -28,11 +29,6 @@ class ClassDeclare implements Renderable
      * Registered trait
      */
     public $traits = array();
-
-    /**
-     * @var TemplateView object.
-     */
-    protected $view;
 
     public $templateFile;
     public $templateDirs;
@@ -60,25 +56,13 @@ class ClassDeclare implements Renderable
      */
     public function __construct($className, array $options = array())
     {
-        if( !isset($options['template_dirs']) ) {
-            $ro = new ReflectionObject($this);
-            $dir = dirname($ro->getFilename()) . DIRECTORY_SEPARATOR . 'Templates';
-            $options['template_dirs'] = array($dir);
-        }
-        if( !isset($options['template']) ) {
-            $options['template'] = 'Class.php.twig';
-        }
-
-        $this->options = $options;
-        $this->templateFile = $options['template'];
-        $this->templateDirs = $options['template_dirs'];
         $this->setClass($className);
+        $this->setOptions($options);
+    }
 
-        $this->view = new TemplateView($this->templateDirs, 
-            (isset($options['twig']) ? $options['twig'] : array()),
-            (isset($options['template_args']) ? $options['template_args'] : array())
-        );
-        $this->view->class = $this;
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
     }
 
     public function setOption($key, $val) {
@@ -122,7 +106,9 @@ class ClassDeclare implements Renderable
 
     public function implementClass($className)
     {
-        $this->interfaces[] = new ClassName($className);
+        $class = new ClassName($className);
+        $this->useClass($className);
+        $this->interfaces[] = $class;
     }
 
     public function addMethod($scope, $methodName, array $arguments = array(), $body = array(), array $bodyArguments = array())
@@ -189,20 +175,53 @@ class ClassDeclare implements Renderable
         return $this->class->getFullName();
     }
 
-    public function __set($n,$v) {
-        $this->view->__set($n,$v);
-    }
-
     public function render(array $args = array())
     {
-        foreach( $args as $n => $v ) {
-            $this->view->__set($n,$v);
+        $lines = ["<?php\n"]; // Add an option to render with a php tag
+
+        if ($this->class->namespace) {
+            $lines[] = 'namespace ' . $this->class->namespace . ';';
         }
-        $content = $this->view->renderFile($this->templateFile);
-        if ( isset($this->options['trim_tag']) && strpos($content, '<?php') === 0 ) {
-            return substr($content, 5);
+
+        // When there is no namespace, we should skip the first-level class use statement.
+        if ($this->uses) {
+            foreach($this->uses as $u) {
+                $lines[] = $u->render();
+            }
         }
-        return $content;
+
+        $lines[] = 'class ' . $this->class->name;
+        if ($this->extends) {
+            $lines[] = '    extends ' . $class->extends->render();
+        }
+        if ($this->interfaces) {
+            $lines[] = '    implements ' . join(', ', array_map(function($class) { 
+                return $class->name;
+            }, $class->interfaces));
+        }
+
+        $block = new BracketedBlock;
+        foreach($this->traits as $trait) {
+            $block[] = $trait;
+        }
+
+        foreach($this->consts as $cont) {
+            $block[] = $const;
+        }
+
+        foreach($this->staticVars as $var) {
+            $block[] = $var;
+        }
+
+        foreach($this->properties as $property) {
+            $block[] = $property;
+        }
+
+        foreach($this->methods as $method) {
+            $block[] = $method;
+        }
+        $lines[] = $block->render($args);
+        return join("\n", $lines);
     }
 
     public function writeTo($file)
@@ -214,24 +233,6 @@ class ClassDeclare implements Renderable
         $tmpname = tempnam('/tmp', str_replace('\\','_',$this->class->getFullName()) );
         file_put_contents($tmpname, $this->render() );
         return require $tmpname;
-    }
-
-
-    public function getView() {
-        return $this->view;
-    }
-
-    public function setView($view) {
-        $this->view = $view;
-    }
-
-
-    public function addMsgId($msgId) {
-        $this->msgIds[] = $msgId;
-    }
-
-    public function setMsgIds($msgIds) {
-        $this->msgIds = $msgIds;
     }
 
     public function addTrait(ClassTrait $trait) {
@@ -254,6 +255,17 @@ class ClassDeclare implements Renderable
         $this->addTrait($trait);
         return $trait;
     }
+
+    public function addMsgId($msgId)
+    {
+        $this->msgIds[] = $msgId;
+    }
+
+    public function setMsgIds($msgIds)
+    {
+        $this->msgIds = $msgIds;
+    }
+
 
 }
 

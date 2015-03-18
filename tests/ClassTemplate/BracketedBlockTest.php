@@ -1,8 +1,9 @@
 <?php
 use ClassTemplate\Block;
 use ClassTemplate\BracketedBlock;
+use ClassTemplate\Testing\CodeGenTestCase;
 
-class BracketedBlockTest extends PHPUnit_Framework_TestCase
+class BracketedBlockTest extends CodeGenTestCase
 {
     public function testSimpleBracketedBlock()
     {
@@ -10,7 +11,7 @@ class BracketedBlockTest extends PHPUnit_Framework_TestCase
         $block[] = '$a = 1;';
         $block[] = '$b = 2;';
         $block[] = 'return $a + $b;';
-        $this->assertStringEqualsFile('tests/data/bracketed_block_simple.fixture',$block->render());
+        $this->assertCodeEqualsFile('tests/data/bracketed_block_simple.fixture',$block);
     }
 
     public function testSimpleBracketedBlockAndSubBlock()
@@ -24,7 +25,7 @@ class BracketedBlockTest extends PHPUnit_Framework_TestCase
         $subblock[] = '$f = $a * $b;';
         $block[] = $subblock;
         $block[] = 'return $a + $b;';
-        $this->assertStringEqualsFile('tests/data/bracketed_block_subblock.fixture', $block->render());
+        $this->assertCodeEqualsFile('tests/data/bracketed_block_subblock.fixture', $block);
     }
 }
 
