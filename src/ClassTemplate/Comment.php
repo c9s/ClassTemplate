@@ -19,6 +19,8 @@ class Comment extends Statement implements Renderable
             $out .= $this->comment;
         } else if($this->comment instanceof Renderable) {
             $out .= $this->comment->render($args);
+        } else {
+            throw new Exception('Invalid type');
         }
         return $out;
     }
