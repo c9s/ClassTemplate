@@ -25,6 +25,8 @@ class ClassTrait implements Renderable
 
     public $definitions = array();
 
+    public $indentLevel = 0;
+
     public function __construct(array $classes)
     {
         $this->classes = $classes;
@@ -40,8 +42,20 @@ class ClassTrait implements Renderable
         return $this;
     }
 
+    public function setIndentLevel($level) {
+        $this->indentLevel = $level;
+    }
+
+    public function increaseIndentLevel() {
+        $this->indentLevel++;
+    }
+
+    public function decreaseIndentLevel() {
+        $this->indentLevel--;
+    }
+
     public function render(array $args = array()) {
-        $out = "use " . join(', ', $this->classes);
+        $out = Indenter::indent($this->indentLevel) . "use " . join(', ', $this->classes);
         if (empty($this->definitions)) {
             $out .= ";";
         } else {

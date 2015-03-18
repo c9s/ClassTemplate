@@ -16,8 +16,8 @@ class ClassMethod extends UserFunction implements Renderable
     public function render(array $args = array())
     {
         $block = $this->getBlock();
-        $block->setIndent(1);
-        return Indenter::indent(1)  . $this->scope . ' function ' . $this->name . '(' . $this->renderArguments() . ")\n" 
+        $block->setIndentLevel($this->indentLevel);
+        return Indenter::indent($this->indentLevel)  . $this->scope . ' function ' . $this->name . '(' . $this->renderArguments() . ")\n" 
             . $block->render($args)
             ;
     }

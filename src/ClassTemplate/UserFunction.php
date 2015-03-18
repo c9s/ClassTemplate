@@ -13,6 +13,8 @@ class UserFunction extends Statement implements Renderable
     public $body;
     public $bodyArguments = array();
 
+    public $indentLevel = 0;
+
     public $block;
 
     /**
@@ -35,6 +37,18 @@ class UserFunction extends Statement implements Renderable
         if ($bodyArguments) {
             $this->block->setDefaultArguments($bodyArguments);
         }
+    }
+
+    public function setIndentLevel($level) {
+        $this->indentLevel = $level;
+    }
+
+    public function increaseIndentLevel() {
+        $this->indentLevel++;
+    }
+
+    public function decreaseIndentLevel() {
+        $this->indentLevel--;
     }
 
 

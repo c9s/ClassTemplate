@@ -218,6 +218,7 @@ class ClassDeclare implements Renderable
         }
 
         foreach($this->methods as $method) {
+            $method->getBlock()->setIndentLevel(1);
             $block[] = $method;
         }
         $lines[] = $block->render($args);

@@ -2,6 +2,7 @@
 namespace ClassTemplate;
 use ClassTemplate\Utils;
 use ClassTemplate\Renderable;
+use ClassTemplate\Indenter;
 
 class ClassConst extends Statement implements Renderable
 {
@@ -16,7 +17,7 @@ class ClassConst extends Statement implements Renderable
     }
 
     public function render(array $args = array()) {
-        return Utils::indent(1) . 'const ' . $this->name . ' = ' . var_export($this->value,true) . ';';
+        return Indenter::indent($this->indentLevel) . 'const ' . $this->name . ' = ' . var_export($this->value,true) . ';';
     }
 
     public function __toString() {

@@ -18,7 +18,7 @@ class ClassProperty extends Statement implements Renderable
 
     public function render(array $args = array())
     {
-        $code = $this->scope . ' $' . $this->name;
+        $code = Indenter::indent($this->indentLevel) . $this->scope . ' $' . $this->name;
         if ( $this->value ) {
             $code .= ' = ' . var_export($this->value,true);
         }

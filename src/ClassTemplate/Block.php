@@ -88,7 +88,7 @@ class Block implements IteratorAggregate, ArrayAccess, Renderable
     }
 
 
-    public function setIndent($indent) {
+    public function setIndentLevel($indent) {
         $this->indentLevel = $indent;
     }
 
