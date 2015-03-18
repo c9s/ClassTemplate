@@ -25,7 +25,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
 
     public function testClassTemplateWithDefaultOptions() 
     {
-        $classTemplate = new ClassTemplate\ClassTemplate('Foo\\Bar2');
+        $classTemplate = new ClassTemplate\ClassDeclare('Foo\\Bar2');
         ok($classTemplate);
         $classTemplate->addProperty('record','Product');
         $classTemplate->addProperty('fields', [ 'lang', 'name' ] );
@@ -34,7 +34,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
         $classTemplate->load();
     }
 
-    public function evalTemplate(ClassTemplate\ClassTemplate $classTemplate)
+    public function evalTemplate(ClassTemplate\ClassDeclare $classTemplate)
     {
         $code = $classTemplate->render();
         $tmpname = tempnam('/tmp', preg_replace('/\W/', '_', $classTemplate->class->getFullName()));
@@ -44,7 +44,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
 
     public function testClassTemplate()
     {
-        $classTemplate = new ClassTemplate\ClassTemplate('Foo\\Bar1',array(
+        $classTemplate = new ClassTemplate\ClassDeclare('Foo\\Bar1',array(
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));
@@ -73,7 +73,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
     }
 
     public function testTraitUseInsteadOf() {
-        $classTemplate = new ClassTemplate\ClassTemplate('Foo\\TraitTest',array(
+        $classTemplate = new ClassTemplate\ClassDeclare('Foo\\TraitTest',array(
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));
@@ -83,7 +83,7 @@ class ClassTemplateTest extends PHPUnit_Framework_TestCase
     }
 
     public function testTraitUseAs() {
-        $classTemplate = new ClassTemplate\ClassTemplate('Foo\\TraitUseAsTest',array(
+        $classTemplate = new ClassTemplate\ClassDeclare('Foo\\TraitUseAsTest',array(
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));

@@ -6,17 +6,22 @@ use ReflectionObject;
 use ClassTemplate\ClassTrait;
 use ClassTemplate\Renderable;
 
-class ClassTemplate implements Renderable
+class ClassDeclare implements Renderable
 {
     public $class;
 
     public $extends;
 
     public $interfaces = array();
+
     public $uses = array();
+
     public $methods = array();
+
     public $consts  = array();
+
     public $properties = array();
+
     public $staticVars = array();
 
     /**
@@ -53,7 +58,7 @@ class ClassTemplate implements Renderable
      * ])
      *
      */
-    public function __construct($className,$options = array())
+    public function __construct($className, array $options = array())
     {
         if( !isset($options['template_dirs']) ) {
             $ro = new ReflectionObject($this);
@@ -120,17 +125,10 @@ class ClassTemplate implements Renderable
         $this->interfaces[] = new ClassName($className);
     }
 
-    public function addMethod($scope, $methodName, array $arguments = array(), $body = array(), array $bodyArguments = array(), $autoIndent = true)
+    public function addMethod($scope, $methodName, array $arguments = array(), $body = array(), array $bodyArguments = array())
     {
         $method = new ClassMethod( $methodName, $arguments, $body, $bodyArguments);
         $method->setScope($scope);
-        $block = $method->getBlock();
-        if (!empty($body)) {
-            $block->setBody($body);
-        }
-        if (!empty($bodyArguments)) {
-            $block->setDefaultArguments($bodyArguments);
-        }
         $this->methods[] = $method;
         return $method;
     }
