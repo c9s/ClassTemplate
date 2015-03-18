@@ -8,9 +8,13 @@ class InvalidArgumentTypeException extends InvalidArgumentException
 
     public $givenType;
 
-    public function __construct($message, $givenType, array $expectingTypes = array()) {
+    public function __construct($message, $givenVariable, array $expectingTypes = array()) {
         parent::__construct($message);
-        $this->givenType = $givenType;
+        if (is_object($givenVariable)) {
+            $this->givenType = get_class($givenVariable);
+        } else {
+            $this->givenType = gettype($givenVariable);
+        }
         $this->expectingTypes = $expectingTypes;
     }
 }

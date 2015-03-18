@@ -21,7 +21,7 @@ class Comment extends Statement implements Renderable
         } else if($this->comment instanceof Renderable) {
             $out .= $this->comment->render($args);
         } else {
-            throw new InvalidArgumentTypeException('Invalid type for comment.', gettype($this->comment), [ 'string', 'Renderable' ]);
+            throw new InvalidArgumentTypeException('Invalid type for comment.', $this->comment, [ 'string', 'Renderable' ]);
         }
         return $out;
     }
