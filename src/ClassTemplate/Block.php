@@ -25,6 +25,10 @@ class Block implements IteratorAggregate, ArrayAccess, Renderable
 
     public $args = array();
 
+    public function __construct(array $lines = array()) {
+        $this->lines = $lines;
+    }
+
     /**
      * The default indent level.
      */
