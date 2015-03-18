@@ -1,6 +1,7 @@
 <?php
 namespace ClassTemplate;
 use ClassTemplate\Renderable;
+use ClassTemplate\Statement;
 
 /**
  * use HelloWorld { sayHello as private myPrivateHello; }
@@ -19,13 +20,11 @@ use ClassTemplate\Renderable;
  *    }
  * }
  */
-class ClassTrait implements Renderable
+class ClassTrait extends Statement implements Renderable
 {
     public $classes = array();
 
     public $definitions = array();
-
-    public $indentLevel = 0;
 
     public function __construct(array $classes)
     {
@@ -42,34 +41,18 @@ class ClassTrait implements Renderable
         return $this;
     }
 
-    public function setIndentLevel($level) {
-        $this->indentLevel = $level;
-    }
-
-    public function increaseIndentLevel() {
-        $this->indentLevel++;
-    }
-
-    public function decreaseIndentLevel() {
-        $this->indentLevel--;
-    }
-
     public function render(array $args = array()) {
         $out = Indenter::indent($this->indentLevel) . "use " . join(', ', $this->classes);
         if (empty($this->definitions)) {
             $out .= ";";
         } else {
-            $out .= " {\n";
+            $block = new BracketedBlock;
             foreach($this->definitions as $def) {
-                $out .= "  " . $def . "\n";
+                $block[] = $def;
             }
-            $out .= "}\n";
+            $out .= $block->render($args);
         }
         return $out;
-    }
-
-    public function __toString() {
-        return $this->render();
     }
 }
 
