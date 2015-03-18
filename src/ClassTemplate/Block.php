@@ -3,6 +3,7 @@ namespace ClassTemplate;
 use ClassTemplate\Utils;
 use ClassTemplate\Renderable;
 use ClassTemplate\Indenter;
+use ClassTemplate\Exception\InvalidArgumentTypeException
 use InvalidArgumentException;
 use ArrayAccess;
 use IteratorAggregate;
@@ -49,7 +50,7 @@ class Block implements IteratorAggregate, ArrayAccess, Renderable
         } elseif (is_array($text)) {
             $this->lines = $text;
         } else {
-            throw new InvalidArgumentException("Invalid body type");
+            throw new InvalidArgumentTypeException("Invalid body type", gettype($text), [ 'string', 'array' ]);
         }
     }
 
@@ -105,7 +106,7 @@ class Block implements IteratorAggregate, ArrayAccess, Renderable
                     $body .= $tab . $subline . "\n";
                 }
             } else {
-                throw new Exception("Unsupported line object.");
+                throw new InvalidArgumentTypeException("Unsupported line object type.", gettype($line), ['string', 'Renderable']);
             }
         }
         return Utils::renderStringTemplate($body, array_merge($this->args,$args));
