@@ -120,9 +120,19 @@ class ClassDeclare implements Renderable
         return $method;
     }
 
+    public function addMethodObject(ClassMethod $method)
+    {
+        $this->methods[] = $method;
+    }
+
     public function addConst($name,$value)
     {
         $this->consts[] = new ClassConst($name,$value);
+    }
+
+    public function addConstObject(ClassConst $const)
+    {
+        $this->consts[] = $const;
     }
 
     public function addConsts($array) {
