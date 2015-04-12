@@ -61,7 +61,7 @@ class MethodCall extends Statement implements Renderable
     }
 
     public function render(array $args = array()) {
-        return $this->objectName . '->' . $this->method . '(' . $this->serializeArguments($this->arguments) . ');';
+        return $this->objectName . '->' . $this->method . '(' . $this->serializeArguments($this->arguments) . ')';
     }
 
     public function __toString() {

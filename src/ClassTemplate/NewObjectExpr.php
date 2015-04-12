@@ -5,28 +5,17 @@ use ClassTemplate\Renderable;
 use ClassTemplate\Raw;
 use LogicException;
 
-class MethodCall extends Statement implements Renderable
+class NewObjectExpr extends Statement implements Renderable
 {
-    public $objectName;
-
-    public $method;
+    public $className;
 
     public $arguments = array();
 
-    public function __construct($objectName = '$this', $method = NULL, array $arguments = NULL) {
-        $this->objectName = $objectName;
-        if ($method) {
-            $this->method = $method;
-        }
+    public function __construct($className, array $arguments = NULL) {
+        $this->className = $className;
         if ($arguments) {
             $this->arguments = $arguments;
         }
-    }
-
-    public function method($name) 
-    {
-        $this->method = $name;
-        return $this;
     }
 
     public function setArguments(array $args)
@@ -61,7 +50,7 @@ class MethodCall extends Statement implements Renderable
     }
 
     public function render(array $args = array()) {
-        return $this->objectName . '->' . $this->method . '(' . $this->serializeArguments($this->arguments) . ');';
+        return 'new ' . $this->className . '(' . $this->serializeArguments($this->arguments) . ')';
     }
 
     public function __toString() {
