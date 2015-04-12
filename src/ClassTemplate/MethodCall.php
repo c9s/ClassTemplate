@@ -2,6 +2,7 @@
 namespace ClassTemplate;
 use Exception;
 use ClassTemplate\Renderable;
+use ClassTemplate\Raw;
 
 class MethodCall extends Statement implements Renderable
 {
@@ -44,13 +45,15 @@ class MethodCall extends Statement implements Renderable
         foreach ($this->arguments as $arg) {
             if (is_string($arg) && $arg[0] == '$') {
                 $strs[] = $arg;
-            } else if (is_string($arg)) {
+            } else if ($arg instanceof Raw) {
                 $strs[] = $arg;
+            } else if (is_string($arg)) {
+                $strs[] = var_export($arg);
             } else if (is_array($arg)) {
-                $str = var_export($arg,true);
+                $str = var_export($arg, true);
                 $strs[] = $str;
             } else {
-                throw new Exception("MethodCall template: Unsupported argument type.");
+                throw new LogicException("MethodCall template: Unsupported argument type.");
             }
         }
         $code .= join(', ',$strs);
