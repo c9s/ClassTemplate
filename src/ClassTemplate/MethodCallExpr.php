@@ -5,7 +5,7 @@ use ClassTemplate\Renderable;
 use ClassTemplate\Raw;
 use LogicException;
 
-class MethodCall extends Statement implements Renderable
+class MethodCallExpr implements Renderable
 {
     public $objectName;
 

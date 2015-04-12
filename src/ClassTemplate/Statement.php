@@ -2,7 +2,17 @@
 namespace ClassTemplate;
 use ClassTemplate\Renderable;
 
-abstract class Statement extends Line {
+class Statement extends Line 
+{
+    public $expr;
+
+    public function __construct(Renderable $expr) {
+        $this->expr = $expr;
+    }
+
+    public function render() {
+        return $this->expr->render() . ';';
+    }
 
 }
 

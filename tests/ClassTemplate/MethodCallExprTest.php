@@ -1,11 +1,11 @@
 <?php
 use ClassTemplate\Raw;
 
-class MethodCallTest extends PHPUnit_Framework_TestCase
+class MethodCallExprTest extends PHPUnit_Framework_TestCase
 {
-    function test()
+    public function test()
     {
-        $call = new ClassTemplate\MethodCall;
+        $call = new ClassTemplate\MethodCallExpr;
         $call->method('doSomething');
         $call->addArgument(123);
         $call->addArgument('foo');
@@ -13,7 +13,7 @@ class MethodCallTest extends PHPUnit_Framework_TestCase
         $call->addArgument(array( 'name' => 'hack' ));
         $str = $call->render();
         ok($str);
-        is("\$this->doSomething(123, 'foo', new SplObjectStorage, array (\n  'name' => 'hack',\n));",$str);
+        is("\$this->doSomething(123, 'foo', new SplObjectStorage, array (\n  'name' => 'hack',\n))",$str);
     }
 }
 

@@ -5,7 +5,7 @@ use ClassTemplate\Renderable;
 use ClassTemplate\Raw;
 use LogicException;
 
-class NewObjectExpr extends Statement implements Renderable
+class NewObjectExpr implements Renderable
 {
     public $className;
 
