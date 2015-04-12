@@ -11,8 +11,14 @@ class MethodCall extends Statement implements Renderable
 
     public $arguments = array();
 
-    public function __construct($objname = 'this') {
-        $this->objectName = $objname;
+    public function __construct($objectName = '$this', $method = NULL, array $arguments = NULL) {
+        $this->objectName = $objectName;
+        if ($method) {
+            $this->method = $method;
+        }
+        if ($arguments) {
+            $this->arguments = $arguments;
+        }
     }
 
     public function method($name) 
@@ -28,27 +34,21 @@ class MethodCall extends Statement implements Renderable
     }
 
     public function render(array $args = array()) {
-        $code = '';
-        $code .= '$' . $this->objectName;
-        $code .= '->' . $this->method . '(';
-
+        $code = $this->objectName . '->' . $this->method . '(';
         $strs = array();
-        foreach( $this->arguments as $arg ) {
-            if( is_string($arg) && $arg[0] == '$' ) {
+        foreach ($this->arguments as $arg) {
+            if (is_string($arg) && $arg[0] == '$') {
                 $strs[] = $arg;
-            } 
-            elseif( is_string($arg) ) {
+            } else if (is_string($arg)) {
                 $strs[] = $arg;
-            }
-            elseif( is_array($arg) ) {
+            } else if (is_array($arg)) {
                 $str = var_export($arg,true);
                 $strs[] = $str;
-            }
-            else {
+            } else {
                 throw new Exception("MethodCall template: Unsupported argument type.");
             }
         }
-        $code .= join(',',$strs);
+        $code .= join(', ',$strs);
         $code .= ');';
         return $code;
     }
