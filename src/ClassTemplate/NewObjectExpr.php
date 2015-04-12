@@ -35,6 +35,8 @@ class NewObjectExpr implements Renderable
         foreach ($args as $arg) {
             if (is_string($arg) && $arg[0] == '$') {
                 $strs[] = $arg;
+            } else if ($arg instanceof Renderable) {
+                $strs[] = $arg->render($args);
             } else if ($arg instanceof Raw) {
                 $strs[] = $arg;
             } else if (is_scalar($arg)) {
