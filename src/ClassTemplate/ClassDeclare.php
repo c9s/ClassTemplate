@@ -6,6 +6,7 @@ use ReflectionObject;
 use ClassTemplate\ClassTrait;
 use ClassTemplate\Renderable;
 use ClassTemplate\BracketedBlock;
+use ClassTemplate\Indenter;
 
 class ClassDeclare implements Renderable
 {
@@ -119,9 +120,19 @@ class ClassDeclare implements Renderable
         return $method;
     }
 
+    public function addMethodObject(ClassMethod $method)
+    {
+        $this->methods[] = $method;
+    }
+
     public function addConst($name,$value)
     {
         $this->consts[] = new ClassConst($name,$value);
+    }
+
+    public function addConstObject(ClassConst $const)
+    {
+        $this->consts[] = $const;
     }
 
     public function addConsts($array) {
@@ -192,12 +203,12 @@ class ClassDeclare implements Renderable
 
         $lines[] = 'class ' . $this->class->name;
         if ($this->extends) {
-            $lines[] = '    extends ' . $this->class->extends->render();
+            $lines[] = Indenter::indent(1) . 'extends ' . $this->extends->render();
         }
         if ($this->interfaces) {
-            $lines[] = '    implements ' . join(', ', array_map(function($class) { 
+            $lines[] = Indenter::indent(1) . 'implements ' . join(', ', array_map(function($class) { 
                 return $class->name;
-            }, $class->interfaces));
+            }, $this->class->interfaces));
         }
 
         $block = new BracketedBlock;
@@ -205,7 +216,7 @@ class ClassDeclare implements Renderable
             $block[] = $trait;
         }
 
-        foreach($this->consts as $cont) {
+        foreach($this->consts as $const) {
             $block[] = $const;
         }
 
