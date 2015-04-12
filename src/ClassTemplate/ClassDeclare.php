@@ -192,7 +192,7 @@ class ClassDeclare implements Renderable
 
         $lines[] = 'class ' . $this->class->name;
         if ($this->extends) {
-            $lines[] = '    extends ' . $class->extends->render();
+            $lines[] = '    extends ' . $this->class->extends->render();
         }
         if ($this->interfaces) {
             $lines[] = '    implements ' . join(', ', array_map(function($class) { 
