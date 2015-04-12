@@ -5,7 +5,7 @@ use ClassTemplate\Renderable;
 use Exception;
 use ClassTemplate\Exception\InvalidArgumentTypeException;
 
-class Comment extends Statement implements Renderable
+class Comment extends Line implements Renderable
 {
     public $comment;
 
