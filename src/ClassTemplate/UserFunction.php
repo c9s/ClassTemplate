@@ -5,16 +5,20 @@ use ClassTemplate\BracketedBlock;
 use ClassTemplate\Renderable;
 use ClassTemplate\Indenter;
 
-class UserFunction extends Statement implements Renderable
+class UserFunction extends Block implements Renderable
 {
     public $name;
     public $arguments = array();
 
-    public $body;
     public $bodyArguments = array();
 
     public $indentLevel = 0;
 
+    /**
+     * @var Block
+     *
+     * The body block
+     */
     public $block;
 
     /**
