@@ -27,6 +27,11 @@ class MethodCall extends Statement implements Renderable
         return $this;
     }
 
+    public function setArguments(array $args)
+    {
+        $this->arguments = $args;
+    }
+
     public function addArgument($arg) 
     {
         $this->arguments[] = $arg;
