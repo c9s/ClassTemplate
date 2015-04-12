@@ -110,6 +110,7 @@ class Block implements IteratorAggregate, ArrayAccess, Renderable
                     $body .= $tab . $subline . "\n";
                 }
             } else {
+                var_dump( $line ); 
                 throw new InvalidArgumentTypeException("Unsupported line object type", $line, ['string', 'Renderable']);
             }
         }

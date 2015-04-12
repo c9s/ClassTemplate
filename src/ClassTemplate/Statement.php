@@ -2,7 +2,7 @@
 namespace ClassTemplate;
 use ClassTemplate\Renderable;
 
-class Statement extends Line 
+class Statement extends Line implements Renderable
 {
     public $expr;
 
@@ -10,8 +10,8 @@ class Statement extends Line
         $this->expr = $expr;
     }
 
-    public function render() {
-        return $this->expr->render() . ';';
+    public function render(array $args = array()) {
+        return $this->expr->render($args) . ';';
     }
 
 }
