@@ -50,9 +50,7 @@ class MethodCallExpr implements Renderable
                 $strs[] = $arg->render($args);
             } else if ($arg instanceof Raw) {
                 $strs[] = $arg;
-            } else if (is_scalar($arg)) {
-                $strs[] = var_export($arg, true);
-            } else if (is_array($arg)) {
+            } else if (is_array($arg) || method_exists($arg,"__set_state") || is_scalar($arg)) {
                 $str = var_export($arg, true);
                 $strs[] = $str;
             } else {

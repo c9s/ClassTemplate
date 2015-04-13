@@ -39,9 +39,7 @@ class NewObjectExpr implements Renderable
                 $strs[] = $arg->render($args);
             } else if ($arg instanceof Raw) {
                 $strs[] = $arg;
-            } else if (is_scalar($arg)) {
-                $strs[] = var_export($arg, true);
-            } else if (is_array($arg)) {
+            } else if (is_array($arg) || method_exists($arg,"__set_state") || is_scalar($arg)) {
                 $str = var_export($arg, true);
                 $strs[] = $str;
             } else {
@@ -50,6 +48,7 @@ class NewObjectExpr implements Renderable
         }
         return join(', ',$strs);
     }
+
 
     public function render(array $args = array()) {
         return 'new ' . $this->className . '(' . $this->serializeArguments($this->arguments) . ')';
