@@ -5,7 +5,7 @@ use ClassTemplate\Exportable;
 
 class VariableDeflator
 {
-    static public function deflate($var) 
+    static public function deflate($arg) 
     {
         // Raw string output
         if (is_string($arg) && $arg[0] == '$') {
