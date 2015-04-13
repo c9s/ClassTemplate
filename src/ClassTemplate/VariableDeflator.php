@@ -13,7 +13,7 @@ class VariableDeflator
         } else if ($arg instanceof Renderable) {
             return $arg->render($args);
         } else if ($arg instanceof Raw) {
-            return $arg;
+            return $arg->__toString();
         } else if ($arg instanceof Exportable || method_exists($arg, "__get_state")) {
             return var_export($arg->__get_state(), true);
         } else if (is_array($arg) || method_exists($arg,"__set_state") || is_scalar($arg)) {
