@@ -3,6 +3,7 @@ namespace ClassTemplate;
 use Exception;
 use ClassTemplate\Renderable;
 use ClassTemplate\Raw;
+use ClassTemplate\VariableDeflator;
 use LogicException;
 
 class MethodCallExpr implements Renderable
@@ -44,18 +45,7 @@ class MethodCallExpr implements Renderable
     {
         $strs = array();
         foreach ($args as $arg) {
-            if (is_string($arg) && $arg[0] == '$') {
-                $strs[] = $arg;
-            } else if ($arg instanceof Renderable) {
-                $strs[] = $arg->render($args);
-            } else if ($arg instanceof Raw) {
-                $strs[] = $arg;
-            } else if (is_array($arg) || method_exists($arg,"__set_state") || is_scalar($arg)) {
-                $str = var_export($arg, true);
-                $strs[] = $str;
-            } else {
-                throw new LogicException("MethodCall template: Unsupported argument type.");
-            }
+            $strs[] = VariableDeflator::deflate($arg);
         }
         return join(', ',$strs);
     }
