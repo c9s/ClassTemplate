@@ -1,7 +1,7 @@
 <?php
-namespace ClassTemplate;
-use ClassTemplate\Renderable;
-use ClassTemplate\Statement;
+namespace CodeGen;
+use CodeGen\Renderable;
+use CodeGen\Statement;
 
 /**
  * use HelloWorld { sayHello as private myPrivateHello; }

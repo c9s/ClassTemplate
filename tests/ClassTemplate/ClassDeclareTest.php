@@ -14,20 +14,21 @@ namespace Foo {
 }
 
 namespace {
-use ClassTemplate\Testing\CodeGenTestCase;
-use ClassTemplate\ClassDeclare;
+use ClassTemplate\ClassFile;
+use CodeGen\Testing\CodeGenTestCase;
+use CodeGen\UseClass;
 
-class ClassDeclareTest extends CodeGenTestCase
+class ClassFileTest extends CodeGenTestCase
 {
     public function testUse()
     {
-        $use = new ClassTemplate\UseClass('\Foo\Bar');
+        $use = new UseClass('\Foo\Bar');
         is( 'Foo\Bar', $use->class );
     }
 
     public function testClassTemplateWithDefaultOptions() 
     {
-        $classTemplate = new ClassTemplate\ClassDeclare('Foo\\Bar2');
+        $classTemplate = new ClassTemplate\ClassFile('Foo\\Bar2');
         $classTemplate->addProperty('record','Product');
         $classTemplate->addProperty('fields', [ 'lang', 'name' ] );
         $classTemplate->addMethod('public','getTwo',array(),'return 2;');
@@ -36,7 +37,7 @@ class ClassDeclareTest extends CodeGenTestCase
         $classTemplate->load();
     }
 
-    public function evalTemplate(ClassTemplate\ClassDeclare $classTemplate)
+    public function evalTemplate(ClassTemplate\ClassFile $classTemplate)
     {
         $code = $classTemplate->render();
         $tmpname = tempnam('/tmp', preg_replace('/\W/', '_', $classTemplate->class->getFullName()));
@@ -46,7 +47,7 @@ class ClassDeclareTest extends CodeGenTestCase
 
     public function testClassTemplate()
     {
-        $classTemplate = new ClassTemplate\ClassDeclare('Foo\\Bar1',array(
+        $classTemplate = new ClassTemplate\ClassFile('Foo\\Bar1',array(
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));
@@ -75,7 +76,7 @@ class ClassDeclareTest extends CodeGenTestCase
     }
 
     public function testTraitUseInsteadOf() {
-        $classTemplate = new ClassTemplate\ClassDeclare('Foo\\TraitTest',array(
+        $classTemplate = new ClassTemplate\ClassFile('Foo\\TraitTest',array(
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));
@@ -85,7 +86,7 @@ class ClassDeclareTest extends CodeGenTestCase
     }
 
     public function testTraitUseAs() {
-        $classTemplate = new ClassTemplate\ClassDeclare('Foo\\TraitUseAsTest',array(
+        $classTemplate = new ClassTemplate\ClassFile('Foo\\TraitUseAsTest',array(
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));

@@ -4,10 +4,10 @@ use Exception;
 use ReflectionClass;
 use ReflectionObject;
 use ClassTemplate\ClassTrait;
-use ClassTemplate\Renderable;
-use ClassTemplate\ClassDeclare;
+use CodeGen\Renderable;
+use ClassTemplate\ClassFile;
 
-class TemplateClassDeclare extends ClassDeclare implements Renderable
+class TemplateClassFile extends ClassFile implements Renderable
 {
     /**
      * @var TemplateView object.

@@ -1,6 +1,6 @@
 <?php
-namespace ClassTemplate;
-use ClassTemplate\Renderable;
+namespace CodeGen;
+use CodeGen\Renderable;
 
 class ClassName implements Renderable
 {

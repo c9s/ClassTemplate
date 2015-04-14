@@ -1,9 +1,9 @@
 <?php
-namespace ClassTemplate;
+namespace CodeGen;
 use Exception;
-use ClassTemplate\Renderable;
-use ClassTemplate\Raw;
-use ClassTemplate\VariableDeflator;
+use CodeGen\Renderable;
+use CodeGen\Raw;
+use CodeGen\VariableDeflator;
 use LogicException;
 
 class NewObjectExpr implements Renderable

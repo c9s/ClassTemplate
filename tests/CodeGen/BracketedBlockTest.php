@@ -1,7 +1,7 @@
 <?php
-use ClassTemplate\Block;
-use ClassTemplate\BracketedBlock;
-use ClassTemplate\Testing\CodeGenTestCase;
+use CodeGen\Block;
+use CodeGen\BracketedBlock;
+use CodeGen\Testing\CodeGenTestCase;
 
 class BracketedBlockTest extends CodeGenTestCase
 {

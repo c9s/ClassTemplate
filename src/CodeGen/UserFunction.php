@@ -1,9 +1,9 @@
 <?php
-namespace ClassTemplate;
-use ClassTemplate\Block;
-use ClassTemplate\BracketedBlock;
-use ClassTemplate\Renderable;
-use ClassTemplate\Indenter;
+namespace CodeGen;
+use CodeGen\Block;
+use CodeGen\BracketedBlock;
+use CodeGen\Renderable;
+use CodeGen\Indenter;
 
 class UserFunction extends Block implements Renderable
 {

@@ -1,5 +1,5 @@
 <?php
-namespace ClassTemplate;
+namespace CodeGen;
 
 class UseClass extends Statement implements Renderable
 {

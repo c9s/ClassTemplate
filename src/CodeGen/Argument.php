@@ -1,6 +1,7 @@
 <?php
-namespace ClassTemplate;
-use ClassTemplate\Renderable;
+namespace CodeGen;
+use CodeGen\Renderable;
+use CodeGen\VariableDeflator;
 
 class Argument implements Renderable
 {
@@ -16,7 +17,7 @@ class Argument implements Renderable
     public function render(array $args = array()) {
         $code = $this->name;
         if ($this->default) {
-            $code .= var_export($this->default, true);
+            $code .= ' = ' .  VariableDeflator::deflate($this->default);
         }
         return $code;
     }

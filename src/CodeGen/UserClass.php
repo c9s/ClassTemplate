@@ -1,14 +1,14 @@
 <?php
-namespace ClassTemplate;
+namespace CodeGen;
 use Exception;
 use ReflectionClass;
 use ReflectionObject;
-use ClassTemplate\ClassTrait;
-use ClassTemplate\Renderable;
-use ClassTemplate\BracketedBlock;
-use ClassTemplate\Indenter;
+use CodeGen\ClassTrait;
+use CodeGen\Renderable;
+use CodeGen\BracketedBlock;
+use CodeGen\Indenter;
 
-class ClassDeclare implements Renderable
+class UserClass implements Renderable
 {
     public $class;
 
@@ -31,43 +31,21 @@ class ClassDeclare implements Renderable
      */
     public $traits = array();
 
-    public $templateFile;
-    public $templateDirs;
-    public $options = array();
-    public $msgIds = array();
-
-
     public $usedClasses = array();
 
     /**
      * constructor create a new class template object
      *
      * @param string $className
-     * @param array $options 
      *
      * a sample options:
      * 
-     * $t = new ClassTemplate('NewClassFoo',[
-     *   'template_dirs' => [ path1, path2 ],
-     *   'template' => 'Class.php.twig',
-     *   'template_args' => [ ... predefined template arguments ],
-     *   'twig' => [ 'cache' => false, ... ]
-     * ])
+     * $t = new ClassDeclare('NewClassFoo')
      *
      */
-    public function __construct($className, array $options = array())
+    public function __construct($className)
     {
         $this->setClass($className);
-        $this->setOptions($options);
-    }
-
-    public function setOptions(array $options)
-    {
-        $this->options = $options;
-    }
-
-    public function setOption($key, $val) {
-        $this->options[$key] = $val;
     }
 
     public function setClass($className)
@@ -188,8 +166,7 @@ class ClassDeclare implements Renderable
 
     public function render(array $args = array())
     {
-        $lines = ["<?php\n"]; // Add an option to render with a php tag
-
+        $lines = []; // Add an option to render with a php tag
         if ($this->class->namespace) {
             $lines[] = 'namespace ' . $this->class->namespace . ';';
         }
@@ -236,17 +213,6 @@ class ClassDeclare implements Renderable
         return join("\n", $lines);
     }
 
-    public function writeTo($file)
-    {
-        return file_put_contents($file, $this->render());
-    }
-
-    public function load() {
-        $tmpname = tempnam('/tmp', str_replace('\\','_',$this->class->getFullName()) );
-        file_put_contents($tmpname, $this->render() );
-        return require $tmpname;
-    }
-
     public function addTrait(ClassTrait $trait) {
         $this->traits[] = $trait;
     }
@@ -267,17 +233,5 @@ class ClassDeclare implements Renderable
         $this->addTrait($trait);
         return $trait;
     }
-
-    public function addMsgId($msgId)
-    {
-        $this->msgIds[] = $msgId;
-    }
-
-    public function setMsgIds($msgIds)
-    {
-        $this->msgIds = $msgIds;
-    }
-
-
 }
 

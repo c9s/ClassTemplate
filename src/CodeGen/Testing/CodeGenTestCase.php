@@ -1,11 +1,10 @@
 <?php
-namespace ClassTemplate\Testing;
+namespace CodeGen\Testing;
 use CodeGen\Renderable;
 use PHPUnit_Framework_TestCase;
 
-class CodeGenTestCase extends PHPUnit_Framework_TestCase
+abstract class CodeGenTestCase extends PHPUnit_Framework_TestCase
 {
-
     public function assertCodeEqualsFile($fixtureFile, Renderable $code, array $args = array()) {
         $out = $code->render($args);
         if (!file_exists($fixtureFile) || getenv('OVERRIDE_FIXTURE') ) {
@@ -17,8 +16,6 @@ class CodeGenTestCase extends PHPUnit_Framework_TestCase
         }
         $this->assertStringEqualsFile($fixtureFile, $out, "Testing $fixtureFile");
     }
-
-
 }
 
 

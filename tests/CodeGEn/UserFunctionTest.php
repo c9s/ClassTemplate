@@ -1,5 +1,5 @@
 <?php
-use ClassTemplate\UserFunction;
+use CodeGen\UserFunction;
 
 class UserFunctionTest extends PHPUnit_Framework_TestCase
 {

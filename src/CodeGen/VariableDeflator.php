@@ -1,7 +1,7 @@
 <?php
-namespace ClassTemplate;
-use ClassTemplate\Raw;
-use ClassTemplate\Exportable;
+namespace CodeGen;
+use CodeGen\Raw;
+use CodeGen\Exportable;
 
 class VariableDeflator
 {

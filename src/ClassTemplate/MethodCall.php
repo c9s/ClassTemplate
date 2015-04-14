@@ -1,7 +1,7 @@
 <?php
 namespace ClassTemplate;
 use Exception;
-use ClassTemplate\Renderable;
+use CodeGen\Renderable;
 use ClassTemplate\Raw;
 use LogicException;
 

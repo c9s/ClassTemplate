@@ -1,7 +1,7 @@
 <?php
-namespace ClassTemplate;
-use ClassTemplate\Comment;
-use ClassTemplate\CommentBlock;
+namespace CodeGen;
+use CodeGen\Comment;
+use CodeGen\CommentBlock;
 
 trait Annotator {  
     public $comment;

@@ -1,8 +1,8 @@
 <?php
-namespace ClassTemplate;
-use ClassTemplate\Utils;
-use ClassTemplate\Renderable;
-use ClassTemplate\Indenter;
+namespace CodeGen;
+use CodeGen\Utils;
+use CodeGen\Renderable;
+use CodeGen\Indenter;
 
 class ClassMethod extends UserFunction implements Renderable
 {
