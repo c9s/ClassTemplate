@@ -1,6 +1,6 @@
 <?php
-use ClassTemplate\Block;
-use ClassTemplate\Testing\CodeGenTestCase;
+use CodeGen\Block;
+use CodeGen\Testing\CodeGenTestCase;
 
 class BlockTest extends CodeGenTestCase
 {

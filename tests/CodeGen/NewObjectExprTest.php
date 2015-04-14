@@ -1,5 +1,5 @@
 <?php
-use ClassTemplate\NewObjectExpr;
+use CodeGen\NewObjectExpr;
 
 class NewObjectExprTest extends PHPUnit_Framework_TestCase
 {

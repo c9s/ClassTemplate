@@ -1,6 +1,6 @@
 <?php
-use ClassTemplate\Testing\CodeGenTestCase;
-use ClassTemplate\CommentBlock;
+use CodeGen\Testing\CodeGenTestCase;
+use CodeGen\CommentBlock;
 
 class CommentBlockTest extends CodeGenTestCase
 {
