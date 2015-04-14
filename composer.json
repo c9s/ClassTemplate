@@ -5,6 +5,7 @@
     "version": "2.0.0",
     "require": {
         "php": ">=5.4.0",
+        "corneltek/codegen": "*",
         "twig/twig": "*"
     },
     "require-dev": {
@@ -20,8 +21,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "ClassTemplate\\": "src/ClassTemplate/",
-            "CodeGen\\": "src/CodeGen/"
+            "ClassTemplate\\": "src/ClassTemplate/"
         }
     }
 }
