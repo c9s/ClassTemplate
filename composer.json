@@ -5,7 +5,7 @@
     "version": "2.0.0",
     "require": {
         "php": ">=5.4.0",
-        "corneltek/codegen": "*",
+        "corneltek/codegen": "~2",
         "twig/twig": "*"
     },
     "require-dev": {
