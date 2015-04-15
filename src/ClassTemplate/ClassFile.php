@@ -8,34 +8,9 @@ use CodeGen\Renderable;
 
 class ClassFile extends UserClass
 {
-    public $class;
-
-    public $extends;
-
-    public $interfaces = array();
-
-    public $uses = array();
-
-    public $methods = array();
-
-    public $consts  = array();
-
-    public $properties = array();
-
-    public $staticVars = array();
-
-    /**
-     * Registered trait
-     */
-    public $traits = array();
-
     public $templateFile;
     public $templateDirs;
     public $options = array();
-    public $msgIds = array();
-
-
-    public $usedClasses = array();
 
     /**
      * constructor create a new class template object
@@ -79,19 +54,11 @@ class ClassFile extends UserClass
     }
 
     public function load() {
-        $tmpname = tempnam('/tmp', str_replace('\\','_',$this->class->getFullName()) );
-        file_put_contents($tmpname, $this->render() );
-        return require $tmpname;
-    }
-
-    public function addMsgId($msgId)
-    {
-        $this->msgIds[] = $msgId;
-    }
-
-    public function setMsgIds($msgIds)
-    {
-        $this->msgIds = $msgIds;
+        $tmpname = tempnam('/tmp', $this->getSplFilePath());
+        if (file_put_contents($tmpname, $this->render()) != false) {
+            return require $tmpname;
+        }
+        throw new Exception("Can not load class file $tmpname");
     }
 }
 
