@@ -53,6 +53,11 @@ class ClassFile extends UserClass
         return file_put_contents($file, $this->render());
     }
 
+    public function getSplFilePath()
+    {
+        return str_replace('\\', DIRECTORY_SEPARATOR, ltrim($this->class->getFullName(),'\\'));
+    }
+
     public function load() {
         $tmpname = tempnam('/tmp', $this->getSplFilePath());
         if (file_put_contents($tmpname, $this->render()) != false) {
