@@ -30,7 +30,7 @@ class ClassFileTest extends CodeGenTestCase
     {
         $classTemplate = new ClassTemplate\ClassFile('Foo\\Bar2');
         $classTemplate->addProperty('record','Product');
-        $classTemplate->addProperty('fields', [ 'lang', 'name' ] );
+        $classTemplate->addProperty('fields', array( 'lang', 'name' ));
         $classTemplate->addMethod('public','getTwo',array(),'return 2;');
         $classTemplate->addMethod('public','getFoo',array('$i'),'return $i;');
         $this->assertCodeEqualsFile('tests/data/class_simple.fixture', $classTemplate);
@@ -53,7 +53,7 @@ class ClassFileTest extends CodeGenTestCase
         ));
         ok($classTemplate);
         $classTemplate->addProperty('record','Product');
-        $classTemplate->addProperty('fields', [ 'lang', 'name' ] );
+        $classTemplate->addProperty('fields', array('lang', 'name'));
         $classTemplate->addMethod('public','getTwo',array(),'return 2;');
         $classTemplate->addMethod('public','getFoo',array('$i'),'return $i;');
 
@@ -65,7 +65,7 @@ class ClassFileTest extends CodeGenTestCase
         ok($bar22);
 
         is('Product', $bar22->record);
-        is(['lang','name'], $bar22->fields);
+        is(array('lang','name'), $bar22->fields);
 
         ok(method_exists($bar22,'getTwo'));
         ok(method_exists($bar22,'getFoo'));
