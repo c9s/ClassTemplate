@@ -7,16 +7,19 @@
          verbose="true">
 
   <php>
-      <!--
-      <env name="OVERRIDE_FIXTURE" value="1"/>
-      -->
   </php>
   <testsuites>
+
+
     <testsuite name="ClassTemplate">
         <directory suffix="Test.php">tests/ClassTemplate</directory>
+        <exclude>
+            <file>tests/ClassTemplate/ClassDeclareTraitTest.php</file>
+        </exclude>
     </testsuite>
-    <testsuite name="CodeGen">
-        <directory suffix="Test.php">tests/CodeGen</directory>
+
+    <testsuite name="ClassTrait">
+        <file>tests/ClassTemplate/ClassDeclareTraitTest.php</file>
     </testsuite>
   </testsuites>
 </phpunit>

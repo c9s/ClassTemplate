@@ -1,19 +1,4 @@
 <?php
-namespace Foo {
-    trait TraitA { 
-        public function hello() {
-            return 'hello from A';
-        }
-    }
-
-    trait TraitB { 
-        public function hello() {
-            return 'hello from B';
-        }
-    }
-}
-
-namespace {
 use ClassTemplate\ClassFile;
 use CodeGen\Testing\CodeGenTestCase;
 use CodeGen\UseClass;
@@ -37,7 +22,7 @@ class ClassFileTest extends CodeGenTestCase
         $classTemplate->load();
     }
 
-    public function evalTemplate(ClassTemplate\ClassFile $classTemplate)
+    public function evalTemplate(ClassFile $classTemplate)
     {
         $code = $classTemplate->render();
         $tmpname = tempnam('/tmp', preg_replace('/\W/', '_', $classTemplate->class->getFullName()));
@@ -74,33 +59,4 @@ class ClassFileTest extends CodeGenTestCase
 
         is(3,$bar22->getFoo(3));
     }
-
-    public function testTraitUseInsteadOf() {
-        $classTemplate = new ClassTemplate\ClassFile('Foo\\TraitTest',array(
-            'template' => 'Class.php.twig',
-            'template_dirs' => array('src/ClassTemplate/Templates'),
-        ));
-        $classTemplate->useTrait('TraitA', 'TraitB')
-            ->useInsteadOf('TraitA::hello', 'TraitB');
-        $this->evalTemplate($classTemplate);
-    }
-
-    public function testTraitUseAs() {
-        $classTemplate = new ClassTemplate\ClassFile('Foo\\TraitUseAsTest',array(
-            'template' => 'Class.php.twig',
-            'template_dirs' => array('src/ClassTemplate/Templates'),
-        ));
-        $classTemplate->useTrait('TraitA', 'TraitB')
-            ->useInsteadOf('TraitB::hello', 'TraitA')
-            ->useAs('TraitA::hello', 'talk');
-        $this->evalTemplate($classTemplate);
-
-        $foo = new Foo\TraitUseAsTest;
-        ok($foo);
-        is('hello from A',$foo->talk());
-        is('hello from B',$foo->hello());
-    }
-
-}
-
 }
