@@ -4,7 +4,7 @@ use Exception;
 use SerializerKit\PhpSerializer;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
-use Twig_Filter_Function;
+use Twig_SimpleFilter;
 
 function twig_var_export($obj)
 {
@@ -31,7 +31,7 @@ class TemplateView
             'debug' => true,
         ) + $options );
         $this->stash = $stash;
-        $this->twig->addFilter('export', new \Twig_Filter_Function('\ClassTemplate\twig_var_export'));
+        $this->twig->addFilter(new Twig_SimpleFilter('export','\ClassTemplate\twig_var_export'));
     }
 
     public function __set($n,$v)
