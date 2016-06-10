@@ -2,11 +2,11 @@
     "name": "corneltek/class-template",
     "homepage": "http://github.com/c9s/ClassTemplate",
     "description": "Class template Utilities",
-    "version": "2.1.2",
+    "version": "3.0.0",
     "require": {
         "php": ">=5.3.0",
         "corneltek/codegen": "^3.0.0",
-        "twig/twig": "^1"
+        "twig/twig": "^1.22"
     },
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master"
