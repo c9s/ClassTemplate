@@ -3,7 +3,7 @@
     "homepage": "http://github.com/c9s/ClassTemplate",
     "description": "Class template Utilities",
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "corneltek/codegen": "^3.2",
         "twig/twig": "^2.11|^1.42"
     },
