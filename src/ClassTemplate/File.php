@@ -1,9 +1,7 @@
 <?php
+
 namespace ClassTemplate;
-use Exception;
-use ReflectionClass;
-use ReflectionObject;
-use CodeGen\Renderable;
+
 use CodeGen\Block;
 
 class File extends Block
@@ -18,7 +16,6 @@ class File extends Block
     {
         return file_put_contents($file, $this->render());
     }
-
 }
 
 

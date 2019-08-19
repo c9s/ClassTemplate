@@ -1,11 +1,9 @@
 <?php
+
 namespace ClassTemplate;
-use Exception;
-use ReflectionClass;
+
 use ReflectionObject;
-use ClassTemplate\ClassTrait;
 use CodeGen\Renderable;
-use ClassTemplate\ClassFile;
 
 class TemplateClassFile extends ClassFile implements Renderable
 {
