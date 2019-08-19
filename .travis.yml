@@ -3,21 +3,15 @@ php:
   - 5.4
   - 5.5
   - 5.6
-#   - hhvm
-before_script:
-  - phpenv rehash
-  - composer install --dev
+  - hhvm
+install:
+- phpenv rehash
+- travis_retry composer self-update
+- travis_retry composer require satooshi/php-coveralls "^1" --no-update --dev
+- travis_retry composer install
 script:
-  - phpunit
+- phpunit -c phpunit.xml.dist
 cache:
+  apt: true
+  directories:
   - vendor
-# matrix:
-#   fast_finish: true
-#   allow_failures:
-#     - php: hhvm
-#     - php: 5.6
-#   exclude:
-#     - php: hhvm
-#       env: DB=pgsql DB_USER=postgres DB_NAME=postgres  # driver currently unsupported by HHVM
-#     - php: hhvm
-#       env: DB=sqlite # some issues at the moment
