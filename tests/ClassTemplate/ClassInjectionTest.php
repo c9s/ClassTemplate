@@ -19,10 +19,10 @@ CODE
 );
         require 'tests/tmp_class';
         $foo = new InjectFoo;
-        ok($foo);
+        $this->assertTrue($foo);
 
         $inject = new ClassTemplate\ClassInjection($foo);
-        ok($inject);
+        $this->assertTrue($inject);
 
         $inject->read();
 
@@ -37,20 +37,20 @@ CODE
         $inject->write();
 
         // file_put_contents('tests/data/injected', $inject);
-        is( file_get_contents('tests/data/injected'), $inject->__toString() );
+        $this->assertEquals( file_get_contents('tests/data/injected'), $inject->__toString() );
 
         $inject->read();
-        is( file_get_contents('tests/data/injected'), $inject->__toString() );
+        $this->assertEquals( file_get_contents('tests/data/injected'), $inject->__toString() );
 
         $inject->write();
-        is( file_get_contents('tests/data/injected'), $inject->__toString() );
+        $this->assertEquals( file_get_contents('tests/data/injected'), $inject->__toString() );
 
 
         $inject->replaceContent('');
         $inject->write();
 
         // file_put_contents('tests/data/replaced',$inject);
-        is( file_get_contents('tests/data/replaced'), $inject->__toString() );
+        $this->assertEquals( file_get_contents('tests/data/replaced'), $inject->__toString() );
 
 
         // TODO test the content

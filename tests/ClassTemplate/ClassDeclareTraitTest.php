@@ -49,9 +49,9 @@ class ClassDeclareTraitTest extends CodeGenTestCase
         $this->evalTemplate($classTemplate);
 
         $foo = new Foo\TraitUseAsTest;
-        ok($foo);
-        is('hello from A',$foo->talk());
-        is('hello from B',$foo->hello());
+        $this->assertTrue($foo);
+        $this->assertEquals('hello from A',$foo->talk());
+        $this->assertEquals('hello from B',$foo->hello());
     }
 }
 
