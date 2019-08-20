@@ -8,7 +8,7 @@ class ClassFileTest extends CodeGenTestCase
     public function testUse()
     {
         $use = new UseClass('\Foo\Bar');
-        is( 'Foo\Bar', $use->class );
+        $this->assertCodeEquals('use Foo\Bar;', $use);
     }
 
     public function testClassTemplateWithDefaultOptions() 
@@ -36,7 +36,7 @@ class ClassFileTest extends CodeGenTestCase
             'template' => 'Class.php.twig',
             'template_dirs' => array('src/ClassTemplate/Templates'),
         ));
-        ok($classTemplate);
+        $this->assertTrue($classTemplate);
         $classTemplate->addProperty('record','Product');
         $classTemplate->addProperty('fields', array('lang', 'name'));
         $classTemplate->addMethod('public','getTwo',array(),'return 2;');
@@ -44,19 +44,19 @@ class ClassFileTest extends CodeGenTestCase
 
         $this->evalTemplate($classTemplate);
 
-        ok(class_exists($classTemplate->class->getFullName()));
+        $this->assertTrue(class_exists($classTemplate->class->getFullName()));
 
         $bar22 = new Foo\Bar1;
-        ok($bar22);
+        $this->assertTrue($bar22);
 
-        is('Product', $bar22->record);
-        is(array('lang','name'), $bar22->fields);
+        $this->assertEquals('Product', $bar22->record);
+        $this->assertEquals(array('lang','name'), $bar22->fields);
 
-        ok(method_exists($bar22,'getTwo'));
-        ok(method_exists($bar22,'getFoo'));
+        $this->assertTrue(method_exists($bar22,'getTwo'));
+        $this->assertTrue(method_exists($bar22,'getFoo'));
 
-        is(2,$bar22->getTwo());
+        $this->assertEquals(2,$bar22->getTwo());
 
-        is(3,$bar22->getFoo(3));
+        $this->assertEquals(3,$bar22->getFoo(3));
     }
 }

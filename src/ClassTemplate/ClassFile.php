@@ -1,10 +1,9 @@
 <?php
+
 namespace ClassTemplate;
+
 use Exception;
-use ReflectionClass;
-use ReflectionObject;
 use CodeGen\UserClass;
-use CodeGen\Renderable;
 
 class ClassFile extends UserClass
 {

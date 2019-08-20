@@ -1,5 +1,7 @@
 <?php
+
 namespace ClassTemplate;
+
 use ReflectionClass;
 
 class ClassInjection
